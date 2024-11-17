@@ -1,0 +1,135 @@
+/* General profile container styling */
+.profile-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Profile header section */
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the image */
+    justify-content: center;
+    position: relative;
+    margin-bottom: 20px;
+    background-color: #f5f8fa;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Circular profile image styling */
+#profile-img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%; /* Circular profile image */
+    border: 4px solid #fff;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+/* Hover effect - dim image and show edit button */
+.edit-photo-btn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-header:hover #profile-img {
+    filter: brightness(0.7);
+}
+
+.profile-header:hover .edit-photo-btn {
+    display: inline-block;
+}
+
+/* Individual profile sections */
+.profile-section {
+    background-color: #f0f4f8;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #14171a;
+}
+
+.profile-section p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #657786;
+}
+
+/* Transition effects on hover */
+.profile-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Edit buttons */
+.profile-section button {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.profile-section button:hover {
+    background-color: #0a84d1;
+}
+
+/* Save Changes Button */
+#save-btn {
+    padding: 12px 24px;
+    background-color: #17bf63;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto;
+}
+
+#save-btn:hover {
+    background-color: #148f4a;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+    #profile-img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-container {
+        width: 95%;
+    }
+}

@@ -1,0 +1,76 @@
+@charset "UTF-8";
+/* Chat Form Area */
+.typing-area {
+    padding: 15px 30px; /* Adjusted padding for better spacing */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-top: 1px solid #ccc; /* Border to separate form from chat */
+}
+
+/* Updated Input Field */
+.typing-area input.input-field {
+    height: 45px;
+    width: 100%; /* Full width to maximize space */
+    font-size: 16px;
+    padding: 0 15px; /* Increased padding for better text spacing */
+    border: 1px solid #ccc;
+    border-radius: 25px; /* Rounded corners for a softer look */
+    outline: none;
+    margin-right: 10px;
+    transition: border-color 0.3s ease; /* Smooth border color transition on focus */
+}
+
+.typing-area input.input-field:focus {
+    border-color: #333; /* Dark border when the input is focused */
+}
+
+/* Updated Emoji and File Upload Icon Styling */
+.typing-area label.icon {
+    font-size: 24px; /* Increased size for icons */
+    color: #666;
+    cursor: pointer;
+    margin-right: 15px; /* More space between the input and icons */
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.typing-area label.icon:hover {
+    color: #333; /* Darker color when hovering over the icon */
+}
+
+/* Send Button Styling */
+.typing-area button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 50%; /* Circular shape for the send button */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for button hover */
+}
+
+.typing-area button:hover {
+    background-color: #555; /* Slightly lighter shade on hover */
+}
+
+/* Emoji Icon Styling */
+.typing-area .emoji-icon {
+    font-size: 24px; /* Larger emoji icon */
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* File Upload Icon Styling */
+.typing-area .custom-file-upload {
+    font-size: 24px; /* Larger file upload icon */
+    margin-right: 10px;
+    cursor: pointer;
+}
+.chat img {
+    max-width: 10px;
+    height: auto;
+    border-radius: 8px; /* Rounded corners */
+    border: 2px solid #ccc; /* Light border around the image */
+    margin-top: 5px; /* Some space above the image */
+}
