@@ -38,7 +38,8 @@ searchBar.onkeyup = ()=>{
  
 function sendGetRequest() {
   // Define the URL of your servlet page
-  const servletUrl = 'http://localhost:8080/ChatAPP/users';
+ // const servletUrl = 'http://localhost:8080/ChatAPP/users';
+ const servletUrl ="users";
   //here to UserServlet.java
 
   // Send a GET request using the fetch API

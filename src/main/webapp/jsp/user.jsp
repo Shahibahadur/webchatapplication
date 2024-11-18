@@ -86,6 +86,7 @@
 			</div>
 			<!-- list of search user  is here; -->
 			<div class="users-list" id="user_list">
+			<!-- response is get form UserServlet using user.js -->
 			
 			</div>
 		</section>

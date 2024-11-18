@@ -7,10 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
+@WebServlet(name="UserServlet", urlPatterns="/users") //from user.js //sendGetRequest();
 
 public class UserServlet extends HttpServlet {
 
@@ -73,7 +76,7 @@ public class UserServlet extends HttpServlet {
 						result = "No message available.";
 					}
 					String msg;
-					if(result.length() > 26) {
+					if(result!=null && result.length() > 26) {
 						msg = result.substring(0, 25) + "...";
 					}else {
 						msg = result;
@@ -105,6 +108,7 @@ public class UserServlet extends HttpServlet {
 		   }
 
 		   resp.getWriter().write(output);
+		   //back to user.jsp
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

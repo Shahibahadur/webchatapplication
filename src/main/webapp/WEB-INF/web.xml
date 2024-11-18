@@ -55,14 +55,14 @@
   	<url-pattern>/user-login</url-pattern>
   </servlet-mapping>
   
-  <servlet>
+  <!-- <servlet>
   	<servlet-name>users</servlet-name>
   	<servlet-class>mypackage.UserServlet</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>users</servlet-name>
   	<url-pattern>/users</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping> -->
   
    <servlet>
   	<servlet-name>chatboxUsers</servlet-name>

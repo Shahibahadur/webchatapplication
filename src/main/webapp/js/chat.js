@@ -235,6 +235,9 @@ function submitForm() {
     // Create an AJAX request to send the message
     const xhr = new XMLHttpRequest();
  	const url = "insertChat";
+	
+	//from here to insertChatServlet
+	
     console.log("Sending POST request to:", url);
 
     xhr.open("POST", url, true);
