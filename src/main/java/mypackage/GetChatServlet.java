@@ -45,13 +45,15 @@ public class GetChatServlet extends HttpServlet {
 						    if(set.getString("msg") != null && !set.getString("msg").isBlank() && set.getString("imagePath") != null) {
 						        // If both message and image path exist
 						        output += "  <p>" + set.getString("msg") + "</p>\n"
-						                + "  <img src='/ChatAPP/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
+						                + "  <img src='"+req.getContextPath() +"/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
 						    } else if(set.getString("msg") != null && !set.getString("msg").isBlank()) {
 						        // If only the message exists
 						        output += "  <p>" + set.getString("msg") + "</p>\n";
 						    } else if(set.getString("imagePath") != null) {
 						        // If only the image exists
-						        output += "  <img src='/ChatAPP/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
+						        output += "  <img src='"+req.getContextPath() +"/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
+						        
+						        System.out.println(output);
 						    }
 
 						    output += "  </div>\n"
@@ -63,13 +65,13 @@ public class GetChatServlet extends HttpServlet {
 						    if(set.getString("msg") != null && !set.getString("msg").isBlank() && set.getString("imagePath") != null) {
 						        // If both message and image path exist
 						        output += "  <p>" + set.getString("msg") + "</p>\n"
-						                + "  <img src='/ChatAPP/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
+						                +"  <img src='"+req.getContextPath() +"/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
 						    } else if(set.getString("msg") != null) {
 						        // If only the message exists
 						        output += "  <p>" + set.getString("msg") + "</p>\n";
 						    } else if(set.getString("imagePath") != null) {
 						        // If only the image exists
-						        output += "  <img src='/ChatAPP/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
+						        output += "  <img src='"+req.getContextPath() +"/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
 						    }
 
 						    output += "  </div>\n"

@@ -209,9 +209,14 @@ function submitForm() {
     }
 
     // Replace spaces with a unique string to handle spaces correctly in URLs
+	
+	if(msg && msg.trim()!==""){
     msg = msg.replaceAll(" ", "__5oO84a9__");
 	
 	formData.append("message", msg);
+	}else{
+		formData.append("message","");
+	}
 	
 	if(img){
 		
@@ -236,7 +241,7 @@ function submitForm() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById("message").value = ""; // Clear the input field
-			document.getElementById("image").value="";
+			document.getElementById("image-upload").value="";
             scrollToBottom(); // Scroll to the bottom of the chat box
         } else if (xhr.readyState === 4) {
             console.error("Error in message submission:", xhr.status, xhr.statusText);
