@@ -9,129 +9,119 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-
-   <servlet>
- 	<servlet-name>jsp_signup</servlet-name>
- 	<servlet-class>url_manager.url_signup_servlet</servlet-class>
- </servlet>
- <servlet-mapping>
- 	<servlet-name>jsp_signup</servlet-name>
- 	<url-pattern>/signup-now</url-pattern>
- </servlet-mapping>
-  
-  
   <servlet>
-  	<servlet-name>signup2</servlet-name>
-  	<servlet-class>mypackage.SignupServlet</servlet-class>
-  	
-  	 <multipart-config>
-        <max-file-size>10485760</max-file-size>
-        <max-request-size>20971520</max-request-size> 
-        <file-size-threshold>0</file-size-threshold>
+    <servlet-name>jsp_signup</servlet-name>
+    <servlet-class>url_manager.url_signup_servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>jsp_signup</servlet-name>
+    <url-pattern>/signup-now</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>signup2</servlet-name>
+    <servlet-class>mypackage.SignupServlet</servlet-class>
+    <multipart-config>
+      <max-file-size>10485760</max-file-size>
+      <max-request-size>20971520</max-request-size>
+      <file-size-threshold>0</file-size-threshold>
     </multipart-config>
-  	
   </servlet>
   <servlet-mapping>
-  	<servlet-name>signup2</servlet-name>
-  	<url-pattern>/signup1</url-pattern>
+    <servlet-name>signup2</servlet-name>
+    <url-pattern>/signup1</url-pattern>
   </servlet-mapping>
-  
- <servlet>
- 	<servlet-name>Login</servlet-name>
- 	<servlet-class>mypackage.LoginServlet</servlet-class>
- </servlet>
- <servlet-mapping>
- 	<servlet-name>Login</servlet-name>
- 	<url-pattern>/Login</url-pattern>
- </servlet-mapping>
-  
-    
   <servlet>
-  	<servlet-name>userlogin</servlet-name>
-  	<servlet-class>url_manager.url_login_servlet</servlet-class>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>mypackage.LoginServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>userlogin</servlet-name>
-  	<url-pattern>/user-login</url-pattern>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/Login</url-pattern>
   </servlet-mapping>
-  
-  <!-- <servlet>
-  	<servlet-name>users</servlet-name>
-  	<servlet-class>mypackage.UserServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>users</servlet-name>
-  	<url-pattern>/users</url-pattern>
-  </servlet-mapping> -->
-  
-   <servlet>
-  	<servlet-name>chatboxUsers</servlet-name>
-  	<servlet-class>url_manager.url_user_servlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>chatboxUsers</servlet-name>
-  	<url-pattern>/user-chatbox</url-pattern>
-  </servlet-mapping> 
-  
-  
-  
   <servlet>
-  	<servlet-name>search</servlet-name>
-  	<servlet-class>mypackage.SearchRequestHandler</servlet-class>
+    <servlet-name>userlogin</servlet-name>
+    <servlet-class>url_manager.url_login_servlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>search</servlet-name>
-  	<url-pattern>/search</url-pattern>
+    <servlet-name>userlogin</servlet-name>
+    <url-pattern>/user-login</url-pattern>
   </servlet-mapping>
-  
-  <!--   <servlet>
-  	<servlet-name>insert_chat</servlet-name>
-  	<servlet-class>mypackage.InsertChatServlet</servlet-class>
+  <servlet>
+    <servlet-name>chatboxUsers</servlet-name>
+    <servlet-class>url_manager.url_user_servlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>insert_chat</servlet-name>
-  	<url-pattern>/insertChat</url-pattern>
-  </servlet-mapping> -->
-  
-   <servlet>
-  	<servlet-name>chats</servlet-name>
-  	<servlet-class>url_manager.url_chat_servlet</servlet-class>
+    <servlet-name>chatboxUsers</servlet-name>
+    <url-pattern>/user-chatbox</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>search</servlet-name>
+    <servlet-class>mypackage.SearchRequestHandler</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>chats</servlet-name>
-  	<url-pattern>/chats</url-pattern>
-  </servlet-mapping> 
-  
-  
-  
- <servlet>
-  	<servlet-name>get_chat</servlet-name>
-  	<servlet-class>mypackage.GetChatServlet</servlet-class>
+    <servlet-name>search</servlet-name>
+    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>chats</servlet-name>
+    <servlet-class>url_manager.url_chat_servlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>get_chat</servlet-name>
-  	<url-pattern>/get_chat</url-pattern>
-  </servlet-mapping> 
-  
-  
-  
-<servlet>
-  	<servlet-name>logout</servlet-name>
-  	<servlet-class>mypackage.LogoutServlet</servlet-class>
+    <servlet-name>chats</servlet-name>
+    <url-pattern>/chats</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>get_chat</servlet-name>
+    <servlet-class>mypackage.GetChatServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>logout</servlet-name>
-  	<url-pattern>/logout</url-pattern>
-  </servlet-mapping> 
-  
- <servlet>
- 	<servlet-name>jsp_profile</servlet-name>
- 	<servlet-class>url_manager.url_profile_servlet</servlet-class>
- </servlet>
- <servlet-mapping>
- 	<servlet-name>jsp_profile</servlet-name>
- 	<url-pattern>/profile</url-pattern>
- </servlet-mapping>
- 
-  
+    <servlet-name>get_chat</servlet-name>
+    <url-pattern>/get_chat</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>logout</servlet-name>
+    <servlet-class>mypackage.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>logout</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>jsp_profile</servlet-name>
+    <servlet-class>url_manager.url_profile_servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>jsp_profile</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FriendRequestServlet</display-name>
+    <servlet-name>FriendRequestServlet</servlet-name>
+    <servlet-class>mypackage.FriendRequestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FriendRequestServlet</servlet-name>
+    <url-pattern>/FriendRequestServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RejectRequestServlet</display-name>
+    <servlet-name>RejectRequestServlet</servlet-name>
+    <servlet-class>friend.RejectRequestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RejectRequestServlet</servlet-name>
+    <url-pattern>/RejectRequestServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RequestReceived</display-name>
+    <servlet-name>RequestReceived</servlet-name>
+    <servlet-class>friend.RequestReceived</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RequestReceived</servlet-name>
+    <url-pattern>/RequestReceived</url-pattern>
+  </servlet-mapping>
 </web-app>
