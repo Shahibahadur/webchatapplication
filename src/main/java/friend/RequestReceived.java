@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/friend-requests-received") // URL mapping
+@WebServlet(name = "RequestReceived" ,urlPatterns="/friend-requests-received") // URL mapping
 public class RequestReceived extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -25,6 +25,8 @@ public class RequestReceived extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        
+        System.out.println(session +"from RequestReceived");
         
         // Get the logged-in user's unique ID
         String loggedInUserId = (String) session.getAttribute("unique_id");

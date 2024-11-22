@@ -1,0 +1,17 @@
+Absolute Path vs Relative Path (Short Note)
+Absolute Path:
+
+Starts with / and points to the resource from the web server's root or the application context root.
+Unaffected by the current file's location.
+Example: /ChatAPP/FriendSearchServlet
+Use for consistent resource links like servlets or critical files.
+Relative Path:
+
+Points to the resource relative to the current file's location.
+Can use ../ to go up a directory.
+Example: ../FriendSearchServlet
+Use for local file references like images or CSS within the same structure.
+Key Difference:
+
+Absolute: Consistent, location-independent.
+Relative: Shorter, depends on the file’s location.

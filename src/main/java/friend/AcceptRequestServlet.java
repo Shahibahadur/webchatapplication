@@ -25,7 +25,7 @@ public class AcceptRequestServlet extends HttpServlet {
         	
         	Connection conn = db.getConnection();
              PreparedStatement stmtUpdate = conn.prepareStatement("UPDATE friend_request SET status = 'accepted' where request_id = ?");
-             PreparedStatement stmtInsert = conn.prepareStatement("INSERT INTO friends (sender, receiver, friendship_date) VALUES ((SELECT sender FROM friend_request WHERE request_id = ?), (SELECT receiver FROM friend_requests WHERE request_id = ?), NOW());");
+             PreparedStatement stmtInsert = conn.prepareStatement("INSERT INTO friends (sender, receiver, friendship_date) VALUES ((SELECT sender FROM friend_request WHERE request_id = ?), (SELECT receiver FROM friend_request WHERE request_id = ?), NOW());");
 	         stmtInsert.setString(1, requestId);
 	         stmtInsert.setString(2, requestId);
 
@@ -36,7 +36,7 @@ public class AcceptRequestServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("friendRequests.jsp");
+        response.sendRedirect("jsp/friend.jsp");
     }
 }
 

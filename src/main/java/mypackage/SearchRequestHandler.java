@@ -60,7 +60,7 @@ public class SearchRequestHandler extends HttpServlet {
 					result = "No message available.";
 				}
 				String msg;
-				if(result.length() > 26) {
+				if(result!= null && result.length() > 26) {
 					msg = result.substring(0, 25) + "...";
 				}else {
 					msg = result;

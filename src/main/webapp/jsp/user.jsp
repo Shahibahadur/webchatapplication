@@ -78,7 +78,7 @@
 					
 					
 					 <!-- Friend Request Icon -->
-		            <a href="http://localhost:8080/ChatAPP/jsp/friend.jsp" title="Friend Requests">
+		            <a href="http://localhost:8080/ChatAPP/friend-requests-received" title="Friend Requests">
 		                <i class="fas fa-user-friends"></i>
 		            </a>
 		

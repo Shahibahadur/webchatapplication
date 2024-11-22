@@ -203,8 +203,13 @@ public class UserServlet extends HttpServlet {
                         pre = "You: ";
                     }
                 }
-
-                String msg = result.length() > 26 ? result.substring(0, 25) + "..." : result;
+                
+//                String msg = result.length() > 26 ? result.substring(0, 25) + "..." : result;
+//change is made here to remove null pointer exception;
+                String msg = null;
+                if(result!=null) {
+                msg = result.length() > 26 ? result.substring(0, 25) + "..." : result;
+                }
 
                 String offline = "offline";
                 if (!set.getString("status").equalsIgnoreCase("Offline now")) {

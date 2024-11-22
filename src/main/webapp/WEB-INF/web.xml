@@ -95,4 +95,13 @@
     <url-pattern>/profile</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>friendsearch</servlet-name>
+  	<servlet-class>friend.FriendSearchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>friendsearch</servlet-name>
+  	<url-pattern>/FriendSearchServlet</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
