@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import mypackage.DatabaseConfig;
 
-@WebServlet("/FriendSearchServlet")
+@WebServlet(name = "FriendSearchServlet", urlPatterns = "/FriendSearchServlet")
 public class FriendSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

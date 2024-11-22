@@ -30,7 +30,7 @@ public class RejectRequestServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("friendRequests.jsp");
+        response.sendRedirect("jsp/friend.jsp");
     }
 }
 

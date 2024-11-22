@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<jsp:forward page="friend-requests-received" />
+<%-- <jsp:forward page="friend-requests-received" /> --%>
 <%@ page import = "java.util.ArrayList"  %>
 <%@ page import = "java.util.HashMap" %>
 <%@ page import = "java.util.Map" %>

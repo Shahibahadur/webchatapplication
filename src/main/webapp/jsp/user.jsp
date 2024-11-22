@@ -35,25 +35,14 @@
 		try{
 			db = new DatabaseConfig();
 			Connection conn = db.getConnection();
-			String sql = "SELECT u.* FROM users u INNER JOIN friend f "
-			+"ON (f.sender = u.unique_id  OR f.receiver=u.unique_id) "
-			+"WHERE (f.sender =? OR f.receiver = ?) AND u.unique_id!= ?;";
-			
-			
+			String sql = "SELECT * FROM users WHERE unique_id=?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			
 // 			requested from signupservlet
 
-			
-			
-			// Get the logged-in user's unique_id from the session
-			String userId = (String) session.getAttribute("unique_id");
-			System.out.println("User ID from session: " + userId);
-			
-			// Set parameters in the query
-			pstmt.setString(1, userId);  // For f.sender = ?
-			pstmt.setString(2, userId);  // For f.receiver = ?
-			pstmt.setString(3, userId);  // To exclude the logged-in user itself
+			String param = ""+session.getAttribute("unique_id");
+            System.out.println("param from user.jsp " + param);
+			pstmt.setString(1,param);
 			ResultSet set = pstmt.executeQuery();
 				if(set.next()){
 					fName = set.getString("fname");
@@ -62,7 +51,7 @@
 					status = set.getString("status");
 				
 			}
-			 
+			
 			}catch(ClassNotFoundException | SQLException e){
 				out.write("Connection not found due to : " + e.getMessage());
 			}

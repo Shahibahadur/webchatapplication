@@ -94,34 +94,5 @@
     <servlet-name>jsp_profile</servlet-name>
     <url-pattern>/profile</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>FriendRequestServlet</display-name>
-    <servlet-name>FriendRequestServlet</servlet-name>
-    <servlet-class>mypackage.FriendRequestServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FriendRequestServlet</servlet-name>
-    <url-pattern>/FriendRequestServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>RejectRequestServlet</display-name>
-    <servlet-name>RejectRequestServlet</servlet-name>
-    <servlet-class>friend.RejectRequestServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RejectRequestServlet</servlet-name>
-    <url-pattern>/RejectRequestServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>RequestReceived</display-name>
-    <servlet-name>RequestReceived</servlet-name>
-    <servlet-class>friend.RequestReceived</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RequestReceived</servlet-name>
-    <url-pattern>/RequestReceived</url-pattern>
-  </servlet-mapping>
+  
 </web-app>
