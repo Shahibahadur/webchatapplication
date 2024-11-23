@@ -1,0 +1,16 @@
+->to find out the default character set used by database
+SHOW VARIABLES LIKE 'character_set%';
+
+-> to view the collation
+SHOW VARIABLES LIKE 'collation%;
+
+-> to show the detail information about the columns of table
+SHOW fULL COLUMNS TABLE;
+
+-> to set character and collate
+CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci; //while creating table at the end
+ALTER TABLE table_name MODIFY COLUMN column_name VARCHAR(255) CHARACTER SET utf8mb4
+ COLLATE utf8mb4_general_ci;
+
+COLLATE-> collation is a set of rules  applied when comparing and sorting character 
+used by the database;
