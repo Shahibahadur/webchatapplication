@@ -14,3 +14,20 @@ ALTER TABLE table_name MODIFY COLUMN column_name VARCHAR(255) CHARACTER SET utf8
 
 COLLATE-> collation is a set of rules  applied when comparing and sorting character 
 used by the database;
+
+->Querying the Database for Foreign Keys
+SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE REFERENCED_TABLE_NAME IS NOT NULL;
+
+->finding the relation of a column of table to another 
+SELECT
+    ->     TABLE_NAME,
+    ->     COLUMN_NAME,
+    ->     CONSTRAINT_NAME
+    -> FROM
+    ->     INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+    -> WHERE
+    ->     REFERENCED_TABLE_NAME = 'groups'
+    ->     AND REFERENCED_COLUMN_NAME = 'group_id'
+    ->     AND TABLE_SCHEMA = 'chat';

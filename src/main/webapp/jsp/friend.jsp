@@ -7,7 +7,7 @@
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">f
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friend Requests</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -37,7 +37,7 @@
                     <p class="name"><%= user.get("fname")+" "+user.get("lname") %></p>
                     <p class="details"><%= user.get("email") %></p>
                 </div>
-                <form action="SendFriendRequestServlet" method="post">
+p                <form action="SendFriendRequestServlet" method="post">
                 
                 <!-- unique_id of another people -->
                 

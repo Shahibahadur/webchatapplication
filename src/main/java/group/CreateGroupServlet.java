@@ -21,11 +21,13 @@ public class CreateGroupServlet extends HttpServlet {
         String groupName = request.getParameter("groupName");
 
         try (Connection conn = new DatabaseConfig().getConnection()) {
+        	
+        	String sql = "SELECT fname , lname FROM unique_id = ?";
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `groups` (group_name, admin_id) VALUES (?, ?)");
             stmt.setString(1, groupName);
             stmt.setString(2, adminId);
             stmt.executeUpdate();
-            response.sendRedirect("group-success.jsp");
+            response.sendRedirect("jsp/group.jsp");
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("group-error.jsp");

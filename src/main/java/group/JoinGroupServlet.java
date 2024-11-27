@@ -24,7 +24,7 @@ public class JoinGroupServlet extends HttpServlet {
             stmt.setInt(1, groupId);
             stmt.setString(2, userId);
             stmt.executeUpdate();
-            response.sendRedirect("join-request-success.jsp");
+            response.sendRedirect("jsp/group.jsp");
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("join-request-error.jsp");

@@ -41,7 +41,7 @@
 // 			requested from signupservlet
 
 			String param = ""+session.getAttribute("unique_id");
-            System.out.println("param from user.jsp " + param);
+            System.out.println(param + "session id  from user.jsp");
 			pstmt.setString(1,param);
 			ResultSet set = pstmt.executeQuery();
 				if(set.next()){
@@ -83,7 +83,7 @@
 		            </a>
 		
 		            <!-- Groups Icon -->
-		            <a href="http://localhost:8080/ChatAPP/jsp/group.jsp" title="Groups">
+		            <a href="http://localhost:8080/ChatAPP/GroupDisplayServlet" title="Groups">
 		                <i class="fas fa-users"></i>
 		            </a>
 					
