@@ -30,7 +30,7 @@
 <body>
     <div class="chat-container">
         <h1>Group Chat</h1>
-        <form action="GroupMessageServlet" method="post" enctype="multipart/form-data">
+        <form action="/ChatAPP/GroupMessageServlet" method="post" enctype="multipart/form-data">
             <input type="hidden" name="groupId" value="<%= groupId %>">
             <textarea name="messageText" placeholder="Type your message here..." required></textarea><br>
             <input type="file" name="attachment"><br>

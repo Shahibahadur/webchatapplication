@@ -103,7 +103,7 @@
         } 
     %>
     
-     <script src="localhost:8080/ChatAPP/js/fetchGroups.js"></script>
+     <script src="http://localhost:8080/ChatAPP/js/fetch&navigate.js"></script>
 </body>
 </html>
 
