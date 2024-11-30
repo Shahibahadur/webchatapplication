@@ -102,4 +102,14 @@
     <servlet-name>friendsearch</servlet-name>
     <url-pattern>/FriendSearchServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetGroupsServlet</display-name>
+    <servlet-name>GetGroupsServlet</servlet-name>
+    <servlet-class>group.GetGroupsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetGroupsServlet</servlet-name>
+    <url-pattern>/GetGroupsServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

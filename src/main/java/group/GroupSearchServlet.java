@@ -70,7 +70,7 @@ public class GroupSearchServlet extends HttpServlet {
         System.out.println(userId + " session from GroupSearchServlet ");
 
         if (userId == null) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("jsp/login.jsp");
             return;
         }
 
@@ -81,7 +81,7 @@ public class GroupSearchServlet extends HttpServlet {
             if (searchQuery != null && !searchQuery.trim().isEmpty()) {
                 // Query to find groups not joined or requested by the user
                 String searchSql = """
-                    SELECT g.group_id, g.group_name
+                    SELECT g.group_id, g.group_name, admin_fname, admin_lname, image
                     FROM `groups` g
                     WHERE g.group_name LIKE ?
                     AND g.group_id NOT IN (
@@ -102,6 +102,10 @@ public class GroupSearchServlet extends HttpServlet {
                         Map<String, String> group = new HashMap<>();
                         group.put("group_id", searchRs.getString("group_id"));
                         group.put("group_name", searchRs.getString("group_name"));
+                        group.put("admin_fname", searchRs.getString("admin_fname"));
+                        group.put("admin_fname", searchRs.getString("admin_lname"));
+                        group.put("image", searchRs.getString("image"));
+                        
                         searchResults.add(group);
                     }
                 }

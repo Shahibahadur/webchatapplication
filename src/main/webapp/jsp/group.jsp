@@ -14,6 +14,8 @@
         <button type="submit">Create Group</button>
     </form>
     
+    <p><a href = "http://localhost:8080/ChatAPP/jsp/CreateGroup.jsp">Create Group</a></p>
+    
     <!-- Group Search Form -->
     <form action="/ChatAPP/GroupSearchServlet" method="get">
         <input type="text" name="searchQuery" placeholder="Search for groups..." required>
@@ -27,7 +29,12 @@
             for (Map<String, String> group : searchResults) {
     %>
         <div>
-            <h3>Search Result: <%= group.get("group_name") %></h3>
+            <img src="<%= request.getServletContext()+"/uploads/"+group.get("image") %>" alt="Profile Picture">
+            <div class="searchGroup">
+	            <h3><%= group.get("group_name") %></h3>
+	            <h3><%=group.get("admin_fname") %></h3>
+	            <h3><%=group.get("admin_lname") %></h3>
+            </div>
             <form action="/ChatAPP/JoinGroupServlet" method="post">
                 <input type="hidden" name="group_id" value="<%= group.get("group_id") %>">
                 <button type="submit">Send Join Request</button>
@@ -42,29 +49,15 @@
         }
     %>
 
- <!-- Display list of available groups -->
-    <h2>Available Groups</h2>
-    <% 
-        List<Map<String, String>> groups = (List<Map<String, String>>) request.getAttribute("groups");
-        if (groups != null && !groups.isEmpty()) {
-            for (Map<String, String> group : groups) {
-    %>
-        <div>
-            <h3><%= group.get("group_name") %></h3>
-            <form action="/ChatAPP/JoinGroupServlet" method="post">
-                <input type="hidden" name="group_id" value="<%= group.get("group_id") %>">
-                <button type="submit">Join Group</button>
-            </form>
-        </div>
-    <% 
-            }
-        } else { 
-    %>
-        <p>No groups available.</p>
-    <% 
-        } 
-    %>
-
+ <!-- Display list of created groups -->
+  <h1>Created Groups</h1>
+    <div id="groupsContainer">
+    
+<!--     here display the created groups -->
+    
+    </div>
+   
+    
     <!-- Display joined groups -->
     <h2>Joined Groups</h2>
     <% 
@@ -109,6 +102,8 @@
    
         } 
     %>
+    
+     <script src="localhost:8080/ChatAPP/js/fetchGroups.js"></script>
 </body>
 </html>
 
