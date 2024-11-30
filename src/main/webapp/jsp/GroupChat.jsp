@@ -1,7 +1,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="mypackage.DatabaseConfig" %>
 <%
-    String groupId = request.getParameter("groupId");
+    String groupId = request.getParameter("group_id");
     if (groupId == null || groupId.isEmpty()) {
         out.println("Group ID is required to view this page.");
         return;
