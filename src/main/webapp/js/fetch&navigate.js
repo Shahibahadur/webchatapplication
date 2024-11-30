@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // Add group image
             const img = document.createElement("img");
-            img.src = `/ChatAPP/${group.image}`;
+            img.src = `/ChatAPP/images/${group.image}`;
             img.alt = "Group Image";
             img.style.width = "100px";
             img.style.height = "100px";
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // Add click event to redirect to group chat
             groupDiv.addEventListener("click", () => {
-                window.location.href = `/ChatAPP/groupchat.jsp?group_id=${group.group_id}`;
+                window.location.href = `/ChatAPP/jspGroupChat.jsp?group_id=${group.group_id}`;
             });
 
             groupsContainer.appendChild(groupDiv);
