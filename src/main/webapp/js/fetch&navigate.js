@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // Add click event to redirect to group chat
             groupDiv.addEventListener("click", () => {
-                window.location.href = `/ChatAPP/groupchat.jsp?group_id=${group.group_id}`;
+                window.location.href = `/ChatAPP/jsp/GroupChat.jsp?group_id=${group.group_id}`;
             });
 
             groupsContainer.appendChild(groupDiv);
