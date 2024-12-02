@@ -88,7 +88,7 @@
 		            </a>
 					
 					<!-- Notifications Icon -->
-					<a href="http://localhost:8080/ChatAPP/notifications.jsp" title="Notifications">
+					<a href="http://localhost:8080/ChatAPP/jsp/notifications.jsp" title="Notifications">
 					    <i class="fas fa-bell"></i>
 					</a>
 					

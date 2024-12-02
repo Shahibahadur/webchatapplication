@@ -15,9 +15,9 @@ import mypackage.DatabaseConfig;
 @WebServlet("/JoinGroupServlet")
 public class JoinGroupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String userId = (String) session.getAttribute("unique_id");
+        
         int groupId = Integer.parseInt(request.getParameter("group_id"));
+        String userId = request.getParameter("user_id");
 
         try (Connection conn = new DatabaseConfig().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Group_Join_Requests (group_id, user_id) VALUES (?, ?)");
