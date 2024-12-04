@@ -3,7 +3,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
         const response = await fetch("http://localhost:8080/ChatAPP/GetGroupsServlet");
-        const groups = await response.json();
+		const groups=null;
+		if (response.ok) {
+		    try {
+		         groups = await response.json();
+		        // Process groups
+		    } catch (e) {
+		        console.error("Invalid JSON response:", e);
+		    }
+		} else {
+		    console.error("Failed to fetch groups. Status:", response.status);
+		}
 
         groups.forEach(group => {
             const groupDiv = document.createElement("div");

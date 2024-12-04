@@ -30,6 +30,8 @@
 
     <!-- Link to create group page -->
     <p><a href="http://localhost:8080/ChatAPP/jsp/CreateGroup.jsp">Create Group</a></p>
+    
+    <hr/>
 
     <!-- Group Search Form -->
     <h2>Search for Groups</h2>
@@ -42,7 +44,11 @@
     <h3>Search Results</h3>
     <%
         List<Map<String, String>> searchResults = (List<Map<String, String>>) request.getAttribute("searchResults");
+        		
+        		System.out.println(searchResults +" Search result from goup.jsp");
+        		
         if (searchResults != null && !searchResults.isEmpty()) {
+        	System.out.println(searchResults +" Search result from group.jsp");
             for (Map<String, String> group : searchResults) {
     %>
         <div>
@@ -72,9 +78,16 @@
     </div>
 
     <!-- Display joined groups -->
-    <h2>Joined Groups</h2>
+    
+<!--     first this page is loaded after request is sent  from GroupDisplayServlet -->  
+	<hr/>
+  
+	<h2>Joined Groups</h2>
     <%
         List<Map<String, String>> joinedGroups = (List<Map<String, String>>) request.getAttribute("joinedGroups");
+   		
+    	System.out.println(joinedGroups + "joined groups from group.jsp");
+    
         if (joinedGroups != null && !joinedGroups.isEmpty()) {
             for (Map<String, String> group : joinedGroups) {
     %>
@@ -90,33 +103,22 @@
     <% 
         } 
     %>
+    
+    <hr/>
 
     <!-- Display join requests -->
     <div id="requestsContainer">
-    <h2>Join Requests</h2>
-    <% 
-        List<Map<String, String>> requests = (List<Map<String, String>>) request.getAttribute("requests");
-        if (requests != null && !requests.isEmpty()) {
-            for (Map<String, String> req : requests) {
-    %>
-        <div>
-            <p><%= req.get("user_name") %> wants to join <%= req.get("group_name") %></p>
-            <form>
-                <input type="hidden" name="request_id" value="<%= req.get("request_id") %>">
-                <button type="button" value="approve">Approve</button>
-                <button type="button" value="reject">Reject</button>
-            </form>
-        </div>
-    <% 
-            }
-        } else { 
-    %>
-        <p>No join requests available.</p>
-    <% 
-        } 
-    %>
-</div>
+	<!-- dynamically show the list of join request to the group created by the users -->
+	</div>		
 
-    <script src="http://localhost:8080/ChatAPP/js/fetch&navigate.js"></script>
+
+
+    <!-- <script src="http://localhost:8080/ChatAPP/js/fetch&navigate.js"></script>
+    
+    this on fetch the detail from GetGroupServlet and shows the joined the group
+    <script src="http://localhost:8080/ChatAPP/js/FetchRequest.js"></script> -->
+        <script src="http://localhost:8080/ChatAPP/js/srj.js"></script>
+    
+    
 </body>
 </html>

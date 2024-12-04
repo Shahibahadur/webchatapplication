@@ -51,7 +51,7 @@ public class GroupJoinRequestsServlet extends HttpServlet {
                         requests.put("request_id", rs.getString("request_id"));
                         requests.put("user_id", rs.getString("user_id"));
                         requests.put("user_fname", rs.getString("fname"));
-                         requests.put("user_fname", rs.getString("lname"))
+                         requests.put("user_lname", rs.getString("lname"));
                         requests.put("group_name", rs.getString("group_name"));
                         joinRequests.add(requests);
                     }

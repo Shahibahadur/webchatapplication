@@ -22,7 +22,7 @@ public class ManageGroupRequestsServlet extends HttpServlet {
         try (Connection conn = new DatabaseConfig().getConnection()) {
             if ("approve".equals(action)) {
                 PreparedStatement stmt = conn.prepareStatement(
-                    "UPDATE Group_Join_Requests SET request_status='Approved' WHERE request_id=?"
+                    "UPDATE Group_Join_Requests SET request_status='approved' WHERE request_id=?"
                 );
                 stmt.setInt(1, requestId);
                 stmt.executeUpdate();
@@ -40,7 +40,7 @@ public class ManageGroupRequestsServlet extends HttpServlet {
                 stmt.setInt(1, requestId);
                 stmt.executeUpdate();
             }
-            response.sendRedirect("manage-requests.jsp");
+           
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("manage-error.jsp");
