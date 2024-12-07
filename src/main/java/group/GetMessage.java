@@ -29,6 +29,7 @@ public class GetMessage extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		String groupId = request.getAttribute("group_id"); 		
 
 		List<Map<String, String>> detail = new ArrayList<>();
 
