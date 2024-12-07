@@ -35,8 +35,35 @@ async function fetchMessages(){
 	}catch(error){
 		console.error("Error fetching messages:", error)
 	}
-}
 
+	
+}
+async function fetchGoup(){
+	const messageContainer = document.getElementById("messageContainer");
+	let id = messageConatiner.dataset.group_id;
+	
+	try{
+		let response = await fetch(`/ChatAPP/GetGroupName?group_id=${encodeURIComponent(id)}`,{
+		method : "POST",
+		headers :{
+			"content-Type" : "application/json"
+			}
+		});
+		if(response.ok){
+			let groupDetail = await response.json;
+			let group = document.getElementById("group");
+			group.innerHtml =`
+   			<img src=`<%=getServletContext()%>/groupimge/${groupDetail.groupImage}`>
+   			<strong>${groupDetai.groupName}</strong>
+   			`	
+		}
+	}catch(error){
+		console.error("error fetching:", error);
+	}
+	
+}
 document.addEventListner("DOMContentLoaded",()=>{
+	fetchGroup();
 	fetchMessages();
+	setInterval(fetchMessages, 2000);
 })
