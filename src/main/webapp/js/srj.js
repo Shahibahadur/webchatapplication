@@ -110,11 +110,15 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
 
                 if (response.ok) {
+					console.log('testing');
                     const result = await response.json();
-                    if (result.success) {
-                        alert(`Request ${action}d successfully!`);
+					console.log(result.status);
+                    if (result.status) {
+                        alert(`Request ${result.status} successfully!`);
+					
                         const updatedRequests = await fetchJoinRequests();
                         displayRequests(updatedRequests); // Refresh the list
+						
                     } else {
                         alert("Failed to manage the request. Try again.");
                     }

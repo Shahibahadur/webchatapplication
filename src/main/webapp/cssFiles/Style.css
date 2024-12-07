@@ -1,6 +1,5 @@
 @charset "UTF-8";
 /* @charset "UTF-8"; */
-@charset "ISO-8859-1";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 *{
@@ -312,10 +311,15 @@ form .name-details .field:last-child{
 	display: flex;
 	align-items: flex-end;
 }
-.chat-box .incoming img{
-	height: 35px;
-	width: 35px;
+.chat-box .incoming img {
+    height: 45px; /* Slightly larger for better visibility */
+    width: 45px;  /* Matches the height */
+    border-radius: 50%; /* Circular image */
+    object-fit: cover; /* Ensures proper scaling without distortion */
+    margin-right: 12px; /* Adds spacing between the image and the message text */
 }
+
+/* recently added */
 
 .incoming .details{
 	margin-left: 10px;
@@ -328,6 +332,26 @@ form .name-details .field:last-child{
 	background: #fff;
 	border-radius: 18px 18px 18px 0;
 }
+ 	
+ 	
+ 	
+ .chat-box .outgoing {
+    display: flex;
+}
+
+.outgoing .details {
+    margin-left: auto;
+    max-width: calc(100% - 130px);
+}
+
+.outgoing .details p {
+    background: #333;
+    color: white;
+    border-radius: 18px 18px 0 18px;
+}
+ 	
+ 	
+ 	
  	
 .chat-area .typing-area{
 	padding: 18px 30px;

@@ -1,0 +1,101 @@
+@charset "UTF-8";
+/* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Header styles */
+h2, h3 {
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Link to create group */
+a i.fas.fa-plus-circle {
+    font-size: 24px;
+    color: #007BFF;
+    text-decoration: none;
+    margin: 10px 0;
+}
+a i.fas.fa-plus-circle:hover {
+    color: #0056b3;
+}
+
+/* Search form */
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+form input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+form button {
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+form button:hover {
+    background-color: #0056b3;
+}
+form button i {
+    font-size: 16px;
+}
+
+/* Search results */
+div {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+}
+div img {
+    margin-right: 15px;
+    border-radius: 5px;
+}
+div .searchGroup {
+    flex-grow: 1;
+}
+div .searchGroup h3 {
+    margin: 0;
+}
+
+/* Join request button */
+form button[type="submit"] {
+    background-color: #28A745;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+form button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Joined groups */
+#groupsContainer, #requestsContainer {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+#groupsContainer h3, #requestsContainer h3 {
+    margin: 5px 0;
+}

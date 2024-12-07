@@ -6,6 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Group Management</title>
+    <link rel = "stylesheet" href = "/ChatAPP/cssFiles/group.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    
 </head>
 <body>
 
@@ -29,16 +32,21 @@
     </form>
 
     <!-- Link to create group page -->
-    <p><a href="http://localhost:8080/ChatAPP/jsp/CreateGroup.jsp">Create Group</a></p>
-    
+	<p>
+	    <a href="http://localhost:8080/ChatAPP/jsp/CreateGroup.jsp">
+	        <i class="fas fa-plus-circle"></i>
+	    </a>
+	</p>    
     <hr/>
 
     <!-- Group Search Form -->
     <h2>Search for Groups</h2>
-    <form action="/ChatAPP/GroupSearchServlet" method="get">
-        <input type="text" name="searchQuery" placeholder="Search for groups..." required>
-        <button type="submit">Search</button>
-    </form>
+   <form action="/ChatAPP/GroupSearchServlet" method="get">
+	    <input type="text" name="searchQuery" placeholder="Search for groups..." required>
+	    <button type="submit">
+	        <i class="fas fa-search"></i>
+	    </button>
+  </form>
 
     <!-- Display Search Results -->
     <h3>Search Results</h3>
@@ -91,6 +99,10 @@
         if (joinedGroups != null && !joinedGroups.isEmpty()) {
             for (Map<String, String> group : joinedGroups) {
     %>
+      <a href="/ChatAPP/jsp/GroupChat.jsp?group_id=<%= group.get("group_id") %>">
+      <img src="<%= request.getContextPath() + "/uploads/" + group.get("group_image") %>" alt="Group Image" width="100" height="100">
+      </a>
+    
         <div>
             <h3><%= group.get("group_name") %></h3>
             <p>Joined on: <%= group.get("joined_at") %></p>
@@ -111,14 +123,6 @@
 	<!-- dynamically show the list of join request to the group created by the users -->
 	</div>		
 
-
-
-    <!-- <script src="http://localhost:8080/ChatAPP/js/fetch&navigate.js"></script>
-    
-    this on fetch the detail from GetGroupServlet and shows the joined the group
-    <script src="http://localhost:8080/ChatAPP/js/FetchRequest.js"></script> -->
-        <script src="http://localhost:8080/ChatAPP/js/srj.js"></script>
-    
-    
+        <script src="http://localhost:8080/ChatAPP/js/srj.js"></script>    
 </body>
 </html>

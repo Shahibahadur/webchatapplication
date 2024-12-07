@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import mypackage.DatabaseConfig;
+
+
+//display the groups in which user is joined 
 
 @WebServlet("/GroupDisplayServlet")
 public class GroupDisplayServlet extends HttpServlet {
@@ -38,19 +43,28 @@ public class GroupDisplayServlet extends HttpServlet {
 
         try (Connection connection = new DatabaseConfig().getConnection()) {
             String joinedGroupsSql = """
-                SELECT g.group_id, g.group_name
+                SELECT g.group_id, g.image, g.group_name, gm.joined_at
                 FROM `groups` g
                 JOIN group_members gm ON g.group_id = gm.group_id
-                WHERE gm.user_id = ? AND gm.status = 'approved'
+                WHERE gm.user_id = ? AND gm.status = 'approved' and admin_id !=?
             """;
             try (PreparedStatement joinedGroupsStmt = connection.prepareStatement(joinedGroupsSql)) {
                 joinedGroupsStmt.setString(1, userId);
+                joinedGroupsStmt.setString(2,userId);
                 ResultSet joinedGroupsRs = joinedGroupsStmt.executeQuery();
 
                 while (joinedGroupsRs.next()) {
                     Map<String, String> group = new HashMap<>();
                     group.put("group_id", joinedGroupsRs.getString("group_id"));
                     group.put("group_name", joinedGroupsRs.getString("group_name"));
+                    group.put("group_image",joinedGroupsRs.getString("image"));
+                    Timestamp joinedAt = joinedGroupsRs.getTimestamp("joined_at");
+                    if (joinedAt != null) {
+                        String formattedTimestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(joinedAt);
+                        group.put("joined_at", formattedTimestamp);
+                    } else {
+                        group.put("joined_at", "N/A");
+                    }
                     joinedGroups.add(group);
                 }
             }
