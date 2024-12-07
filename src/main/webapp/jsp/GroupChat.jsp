@@ -71,7 +71,7 @@
             %>
         </div> --%>
 
-		<div id = "messageContainer" class = "message_container">
+		<div dataset-group_id ="<%=group_id>" id = "messageContainer" class = "message_container">
 		
 		
 		</div>
