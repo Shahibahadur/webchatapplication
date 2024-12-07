@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 </head>
 <body>
-    <div class="chat-container">
+   <!--  <div class="chat-container">
         <!-- Chat Header -->
         <div class="chat-header">
             <div class="user-info">
@@ -34,7 +34,10 @@
                     <div class="status">Active now</div>
                 </div>
             </div>
-        </div>
+        </div>  -->
+<div id = "group" dataset-group_id ="<%=group_id>">
+<-- group profile -->
+<div>
 
         <!-- Messages Section -->
 <%--         <div class="chat-messages">
