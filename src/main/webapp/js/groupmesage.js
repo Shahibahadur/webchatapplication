@@ -39,8 +39,8 @@ async function fetchMessages(){
 	
 }
 async function fetchGoup(){
-	const messageContainer = document.getElementById("messageContainer");
-	let id = messageConatiner.dataset.group_id;
+	const groupId = document.getElementById("group");
+	let id = groupId.dataset.group_id;
 	
 	try{
 		let response = await fetch(`/ChatAPP/GetGroupName?group_id=${encodeURIComponent(id)}`,{
@@ -49,14 +49,20 @@ async function fetchGoup(){
 			"content-Type" : "application/json"
 			}
 		});
-		if(response.ok){
-			let groupDetail = await response.json;
-			let group = document.getElementById("group");
-			group.innerHtml =`
-   			<img src=`<%=getServletContext()%>/groupimge/${groupDetail.groupImage}`>
-   			<strong>${groupDetai.groupName}</strong>
-   			`	
+		if (response.ok) {
+		    // Parse the JSON response
+		    let groupDetail = await response.json();
+		    
+		    // Get the group element
+		    let group = document.getElementById("group");
+		    
+		    // Update the innerHTML of the group element
+		    group.innerHTML = `
+		        <img src='<%=getServletContext()%>/groupimge/${groupDetail.groupImage}' alt="Group Image">
+		        <strong>${groupDetail.groupName}</strong>
+		    `;
 		}
+
 	}catch(error){
 		console.error("error fetching:", error);
 	}
