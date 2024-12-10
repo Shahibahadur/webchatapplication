@@ -89,40 +89,50 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    <div id="group" data-group-id="<%= groupId %>"></div>
+	
+	<div class = "wrapper">
+	<section class = "chat_area">
+		<header>
+		    <div class = "details" id="group" data-group-id="<%= groupId %>">
+		    
+		    
+		    </div>
+		</header>    
 
-    <div id="messageContainer" data-group-id="<%= groupId %>" class="message_container"></div>
+	    <div id="messageContainer" data-group-id="<%= groupId %>" class="chat-box">
+	    
+	    	<!-- message is shown here -->
+	    </div>
 
     <!-- Typing Area -->
-    <div class="typing-area">
-        <form action="/ChatAPP/GroupMessageServlet" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="groupId" value="<%= groupId %>">
-            <input type="text" name="messageText" class="input-field" placeholder="Type a message here..." required>
+   
+			<form action = "#" id = "message_box" class = "typing-area" autocomplete = "off">
+            <input type="hidden" id = "groupID" name="groupID" value="<%= groupId %>">
+			<input type = "text" name = "message" id = "message" class = "input-field" placeholder = "Type a message here..">
 
-            <!-- Emoji Icon -->
-            <label for="file-input" class="emoji-icon">
-                <i class="fas fa-smile"></i>
-            </label>
-
-            <!-- Image Upload -->
-            <label for="image-upload" class="icon">
-                <i class="fas fa-image"></i>
-            </label>
-            <input id="image-upload" type="file" name="image" accept="image/*" style="display: none;">
-
-            <!-- File Upload -->
-            <label for="file-upload" class="icon">
-                <i class="fas fa-paperclip"></i>
-            </label>
-            <input id="file-upload" type="file" name="attachment" style="display: none;">
-
-            <!-- Send Button -->
-            <button type="submit" class="send-btn">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </form>
+           	<!-- Emoji icon for selecting an image -->
+				 <label for="file-input" class="emoji-icon">
+				    <i class="fas fa-smile"></i>
+				</label>
+				
+				<!-- Image Upload Icon -->
+				<label for="image-upload" class="custom-file-upload">
+				    <i class="fas fa-image"></i> <!-- Image icon -->
+				</label>
+				<input id="image-upload" type="file" name="image" accept="image/*" style="display: none;"/>
+				
+				<!-- File Upload Icon -->
+				<label for="file-upload" class="custom-file-upload">
+				    <i class="fas fa-paperclip"></i> <!-- File icon -->
+				</label>
+				<input id="file-upload" type="file" name="file" style="display: none;"/>
+				
+				<!-- Send Button -->
+				<button type="button" onclick="submitForm()"><i class="fab fa-telegram-plane"></i></button>
+       		   </form>
+    
+    	</section>
     </div>
-
     <script src="http://localhost:8080/ChatAPP/js/groupmesage.js"></script>
 </body>
 </html>

@@ -64,11 +64,89 @@ async function fetchGroup() {
     }
 }
 
+
+function submitForm() {
+    const FORM = document.getElementById("message_box");
+    const FORMDATA = new FormData(FORM);
+    let message = document.getElementById("message").value.trim();
+    let image = document.getElementById("image-upload").files[0];
+
+    if (!message && !image) {
+        alert("No message or image provided. Cannot send an empty message.");
+        return;
+    }
+
+    if (message && message.trim() !== "") {
+        message = message.replaceAll(" ", "__5oO84a9__");
+        FORMDATA.append("message", message);
+    } else {
+        FORMDATA.append("message", "");
+    }
+
+    if (image) {
+        FORMDATA.append("image", image);
+    }
+
+    const groupID = document.getElementById("groupID").value;
+    FORMDATA.append("groupID", groupID);
+
+    const XHR = new XMLHttpRequest();
+    const URL = "http://localhost:8080/ChatAPP/GroupMessage";
+
+    XHR.open("POST", URL, true);
+    XHR.onreadystatechange = function () {
+        if (XHR.readyState === 4 && XHR.status === 200) {
+            document.getElementById("message").value = "";
+            document.getElementById("image-upload").value = "";
+            scrollToBottom();
+        } else if (XHR.readyState === 4) {
+            console.error("Error in message submission:", XHR.status, XHR.statusText);
+        }
+    };
+    XHR.send(FORMDATA);
+
+    function scrollToBottom() {
+        const CHATBOX = document.querySelector(".chat-box");
+        CHATBOX.scrollTop = CHATBOX.scrollHeight;
+    }
+}
+
+
+
 // Initialize the page
 document.addEventListener("DOMContentLoaded", () => {
+	
+	const FORM = document.querySelector(".typing-area"),
+	INPUTFIELD = FORM ? FORM.querySelector(".input-field") : null,
+	SENDBUTTON = FORM ? FORM.querySelector("button") : null,
+	CHATBOX = document.querySelector(".chat-box");
+	
+	if(!FORM || !INPUTFIELD || !SENDBUTTON || !CHATBOX){
+	console.error("one or more elements could not found. Please check the selector");
+	}
+	
+	
+ 	FORM.onsubmit = (e)=>{
+		
+	/*	e->It represents the event object associated with the submit event.*/
+
+		e.preventDefault();
+	};
+	
+	
+	INPUTFIELD.addEventListener('keydown',function(event){
+		
+		// keydown event is triggred when key is pressed down
+		if(event.key === 'Enter'|| event.keyCode === 13){
+			event.preventDefault();
+			submitForm();
+		}
+		
+	});
+	
     fetchGroup();
    fetchMessages();
-
+    setInterval(fetchMessages,2000)
     // Refresh messages every 2 seconds
 
 });

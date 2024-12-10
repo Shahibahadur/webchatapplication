@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import mypackage.DatabaseConfig;
 
-@WebServlet("/GroupMessageServlet")
+@WebServlet(name = "GroupMessageServlet" ,urlPatterns = {"/GroupMessage"})
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024 * 2, // 2MB
     maxFileSize = 1024 * 1024 * 10,     // 10MB
@@ -40,9 +40,10 @@ public class GroupMessageServlet extends HttpServlet {
         }
 
         // Get form data
-        String group_id = request.getParameter("groupId");
-        String messageText = request.getParameter("messageText");
-        Part attachmentPart = request.getPart("attachment");
+        String group_id = request.getParameter("groupID");
+        String messageText = request.getParameter("message");
+        messageText = messageText != null ? messageText.replaceAll("__5oO84a9__"," "):"";
+        Part attachmentPart = request.getPart("image");
 
         if (group_id == null || group_id.isBlank()) {
             response.getWriter().println("Group ID is required.");
