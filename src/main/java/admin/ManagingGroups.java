@@ -34,7 +34,25 @@ public class ManagingGroups extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+
+		Map<Integer,String> groups = HashMap<>();
+		try{
+			Connection conn = new DatabaseConfig().getConnection();
+
+			String sql = "SELECT group_id, groupName FROM `groups`";
+			PreparedStatment pstmt = conn.getPrepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			when(rs.next()){
+				groups.put(rs.getInt("group_id"),rs.getString("groupName");
+			}
+			
+			
+		}catch(){
+			
+		}
+		response.setContentType("application/json; charset = UTF-8");
+		PrintWriter out = response.getWriter();
+		out.write(new Gson().toJson(groups));
 	}
 
 }
