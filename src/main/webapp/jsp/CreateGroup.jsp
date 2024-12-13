@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Group</title>
-    <link rel="stylesheet" href="http://localhost:8080/ChatAPP/cssFiles/Style.css">
+    <link rel="stylesheet" href="http://localhost:8080/ChatAPP/cssFiles/creategroup.css">
 </head>
 <body>
     <div class="Wrapper">

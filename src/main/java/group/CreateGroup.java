@@ -54,7 +54,7 @@ public class CreateGroup extends HttpServlet {
 
         // Handle group image upload
         if (groupImagePart != null && groupImagePart.getSize() > 0) {
-            String uploadDir = getServletContext().getRealPath("/images");
+            String uploadDir = getServletContext().getRealPath("/groupImages");
             File uploadDirFile = new File(uploadDir);
             if (!uploadDirFile.exists() && !uploadDirFile.mkdirs()) {
                 response.getWriter().println("Failed to create upload directory.");
@@ -63,7 +63,7 @@ public class CreateGroup extends HttpServlet {
 
             // Generate unique file name
             String fileName = UUID.randomUUID().toString() + "_" + groupImagePart.getSubmittedFileName();
-            imagePath = "images/" + fileName;
+            imagePath =  fileName;
 
             // Save file to the server
             groupImagePart.write(uploadDir + File.separator + fileName);

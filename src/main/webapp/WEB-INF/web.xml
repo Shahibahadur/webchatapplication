@@ -102,5 +102,34 @@
     <servlet-name>friendsearch</servlet-name>
     <url-pattern>/FriendSearchServlet</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <description></description>
+    <display-name>AdminLoginServlet</display-name>
+    <servlet-name>AdminLoginServlet</servlet-name>
+    <servlet-class>admin.AdminLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminLoginServlet</servlet-name>
+    <url-pattern>/AdminLoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ManagingUsers</display-name>
+    <servlet-name>ManagingUsers</servlet-name>
+    <servlet-class>admin.ManagingUsers</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManagingUsers</servlet-name>
+    <url-pattern>/ManagingUsers</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ManagingGroups</display-name>
+    <servlet-name>ManagingGroups</servlet-name>
+    <servlet-class>admin.ManagingGroups</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManagingGroups</servlet-name>
+    <url-pattern>/ManagingGroups</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -24,23 +24,17 @@
         }
     %>
 
-    <!-- Form to create a group -->
-    <h2>Create a Group</h2>
-    <form action="/ChatAPP/CreateGroupServlet" method="post">
-        <input type="text" name="groupName" placeholder="Enter group name" required>
-        <button type="submit">Create Group</button>
-    </form>
-
     <!-- Link to create group page -->
 	<p>
 	    <a href="http://localhost:8080/ChatAPP/jsp/CreateGroup.jsp">
 	        <i class="fas fa-plus-circle"></i>
 	    </a>
+	    <span>Create Group</span>
 	</p>    
     <hr/>
 
     <!-- Group Search Form -->
-    <h2>Search for Groups</h2>
+    <h2>Search For Groups</h2>
    <form action="/ChatAPP/GroupSearchServlet" method="get">
 	    <input type="text" name="searchQuery" placeholder="Search for groups..." required>
 	    <button type="submit">
@@ -60,14 +54,14 @@
             for (Map<String, String> group : searchResults) {
     %>
         <div>
-            <img src="<%= request.getContextPath() + "/uploads/" + group.get("image") %>" alt="Group Image" width="100" height="100">
+            <img src="<%= request.getContextPath() + "/groupImages/" + group.get("image") %>" alt="Group Image" width="100" height="100">
             <div class="searchGroup">
                 <h3><%= group.get("group_name") %></h3>
             </div>
             <form action="/ChatAPP/JoinGroupServlet" method="post">
                 <input type="hidden" name="group_id" value="<%= group.get("group_id") %>">
                 <input type="hidden" name="user_id" value="<%= user_id %>">
-                <button type="submit">Send Join Request</button>
+                <button type="submit"> Join</button>
             </form>
         </div>
     <% 
@@ -100,7 +94,7 @@
             for (Map<String, String> group : joinedGroups) {
     %>
       <a href="/ChatAPP/jsp/GroupChat.jsp?group_id=<%= group.get("group_id") %>">
-      <img src="<%= request.getContextPath() + "/uploads/" + group.get("group_image") %>" alt="Group Image" width="100" height="100">
+      <img src="<%= request.getContextPath() + "/groupImages/" + group.get("group_image") %>" alt="Group Image" width="100" height="100">
       </a>
     
         <div>

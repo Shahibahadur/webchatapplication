@@ -1,0 +1,138 @@
+@charset "UTF-8";
+
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #89f7fe, #66a6ff); /* Light blue gradient */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Wrapper for central alignment */
+.Wrapper {
+    width: 60%;
+    max-width: 800px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* Section styles */
+.create-group {
+    padding: 20px;
+}
+
+.create-group header h2 {
+    font-size: 32px;
+    color: #4682b4; /* Steel blue */
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-bottom: 2px solid #4682b4;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* Form styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="file"] {
+    font-size: 16px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="file"]:focus {
+    border-color: #4682b4; /* Steel blue focus */
+    box-shadow: 0 0 5px rgba(70, 130, 180, 0.5);
+}
+
+/* Friends container */
+#friendsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+#friendsContainer div {
+    flex: 1 1 calc(50% - 10px); /* Two columns */
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px;
+    gap: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#friendsContainer label {
+    font-size: 16px;
+    color: #333;
+}
+
+#friendsContainer input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #4682b4; /* Steel blue for checkboxes */
+    margin-right: 10px;
+}
+
+/* Submit button */
+button[type="submit"] {
+    background: #4682b4; /* Steel blue button */
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #5a9bd8; /* Lighter blue hover */
+    transform: scale(1.05);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .Wrapper {
+        width: 90%;
+    }
+
+    #friendsContainer div {
+        flex: 1 1 100%; /* Single column on smaller screens */
+    }
+}

@@ -53,11 +53,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 // Add group image
                 const img = document.createElement("img");
-                img.src = `/ChatAPP/images/${group.image}`;
+                img.src = `/ChatAPP/groupImages/${group.image}`;
                 img.alt = "Group Image";
-                img.style.width = "100px";
-                img.style.height = "100px";
-                img.style.objectFit = "cover";
                 groupDiv.appendChild(img);
 
                 // Add group name

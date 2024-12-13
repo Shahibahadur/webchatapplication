@@ -25,6 +25,8 @@ public class GetMessage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+    	
+    	
         String groupId = request.getParameter("groupId"); // Correctly fetch parameter from the request
 
         System.out.println(groupId + " from GetMessage");
@@ -32,7 +34,7 @@ public class GetMessage extends HttpServlet {
         List<Map<String, String>> detail = new ArrayList<>();
 
         try (Connection connection = new DatabaseConfig().getConnection()) {
-            String sql = "SELECT m.message_text, m.attachment_path, m.timestamp, u.fname, u.lname "
+            String sql = "SELECT m.message_text, m.attachment_path, m.timestamp, u.unique_id, u.fname, u.lname "
                        + "FROM group_messages m "
                        + "JOIN users u ON m.sender_id = u.unique_id "
                        + "WHERE m.group_id = ? ORDER BY m.timestamp ASC";
@@ -43,7 +45,9 @@ public class GetMessage extends HttpServlet {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Map<String, String> information = new HashMap<>();
+                information.put("senderId", rs.getString("unique_id"));
                 information.put("senderName", rs.getString("fname") + " " + rs.getString("lname"));
+                
                 information.put("messageText", rs.getString("message_text"));
                 information.put("timestamp", rs.getString("timestamp"));
                 information.put("attachmentPath", rs.getString("attachment_path"));

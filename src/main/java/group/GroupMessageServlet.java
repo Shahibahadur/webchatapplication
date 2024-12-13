@@ -40,7 +40,7 @@ public class GroupMessageServlet extends HttpServlet {
         }
 
         // Get form data
-        String group_id = request.getParameter("groupID");
+        String group_id = request.getParameter("groupId");
         String messageText = request.getParameter("message");
         messageText = messageText != null ? messageText.replaceAll("__5oO84a9__"," "):"";
         Part attachmentPart = request.getPart("image");
@@ -68,19 +68,31 @@ public class GroupMessageServlet extends HttpServlet {
         }
 
         // Insert message into the database
+        if(!messageText.isEmpty()||attachmentPart!=null) {
         try (Connection connection = new DatabaseConfig().getConnection()) {
             String sql = "INSERT INTO group_messages (group_id, sender_id, message_text, attachment_path) VALUES (?, ?, ?, ?)";
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                 stmt.setInt(1, Integer.parseInt(group_id));
                 stmt.setString(2, senderId);
+                if(messageText.isBlank()) {
+                	stmt.setNull(3, java.sql.Types.VARCHAR);
+                }else {
                 stmt.setString(3, messageText);
-                stmt.setString(4, attachmentPath);
+                }
+                if(attachmentPath!=null) {
+                    stmt.setString(4, attachmentPath);	
+                }else {
+                	stmt.setNull(4, java.sql.Types.VARCHAR);
+                }
                 stmt.executeUpdate();
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             response.getWriter().println("Error: " + e.getMessage());
             return;
+        }
+        }else {
+        	response.sendRedirect("error.jsp");
         }
 
         response.sendRedirect("jsp/GroupChat.jsp?group_id=" + group_id);
