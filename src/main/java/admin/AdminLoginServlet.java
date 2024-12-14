@@ -5,7 +5,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import java.util.regex.Pattern;
+
+import mypackage.DatabaseConfig;
+import mypackage.AppSecurity;
 
 /**
  * Servlet implementation class AdminLoginServlet
@@ -41,22 +53,22 @@ public class AdminLoginServlet extends HttpServlet {
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		if(!emal.isBlank() && !password.isBlank(){
-			String regex =
-			Patteren pattern = Pattern.compile(regex);
+		if(!email.isBlank() && !password.isBlank()){
+			String regex = "^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+			Pattern pattern = Pattern.compile(regex);
 			if(pattern.matcher(email).matches()){
 				try{
-					String passwordHash = AppSecurity.encrypt(password);
+					String passwordHash = AppSecurity.encript(password);;
 					Connection conn = new DatabaseConfig().getConnection();
 					String sql = "SELECT from admin where password = ? and email = ?";
-					PreparedStatement pstmt = conn.getPrepareStatement(sql);
+					PreparedStatement pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1,passwordHash);
 					pstmt.setString(2,email);
 
-					ResultSet rs = stmt.executeQuery();
+					ResultSet rs = pstmt.executeQuery();
 				if(rs.next()){
 					String sq = "UPDATE admin SET status = 'active' WHERE unique_id = ?";
-					PreparedStatement ps = conn.getPrepareStatement(sq);
+					PreparedStatement ps = conn.prepareStatement(sq);
 					ps.setString(1,rs.getString("unique_id"));
 					int i = ps.executeUpdate();
 				
@@ -82,7 +94,6 @@ public class AdminLoginServlet extends HttpServlet {
 		}
 
 		
-		doGet(request, response);
 	}
 
 }

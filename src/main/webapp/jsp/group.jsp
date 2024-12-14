@@ -99,7 +99,6 @@
     
         <div>
             <h3><%= group.get("group_name") %></h3>
-            <p>Joined on: <%= group.get("joined_at") %></p>
         </div>
     <% 
             }

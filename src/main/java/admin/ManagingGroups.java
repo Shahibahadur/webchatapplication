@@ -1,11 +1,20 @@
 package admin;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gson.Gson;
+
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import mypackage.DatabaseConfig;
 
 /**
  * Servlet implementation class ManagingGroups
@@ -35,19 +44,20 @@ public class ManagingGroups extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		Map<Integer,String> groups = HashMap<>();
+		Map<Integer,String> groups = new HashMap<>();
 		try{
 			Connection conn = new DatabaseConfig().getConnection();
 
 			String sql = "SELECT group_id, groupName FROM `groups`";
-			PreparedStatment pstmt = conn.getPrepareStatement(sql);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			when(rs.next()){
-				groups.put(rs.getInt("group_id"),rs.getString("groupName");
+			while(rs.next()){
+				groups.put(rs.getInt("group_id"),rs.getString("group_name"));
 			}
 			
 			
-		}catch(){
+		}catch(Exception e){
+			e.printStackTrace();
 			
 		}
 		response.setContentType("application/json; charset = UTF-8");

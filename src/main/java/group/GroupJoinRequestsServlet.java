@@ -38,7 +38,7 @@ public class GroupJoinRequestsServlet extends HttpServlet {
         ArrayList<Map<String, String>> joinRequests = new ArrayList<>();
 
         try (Connection connection = new DatabaseConfig().getConnection()) {
-            String sql = "SELECT r.request_id, r.user_id, u.fname, u.lname, g.group_name "
+            String sql = "SELECT r.request_id, r.user_id, u.fname, u.lname, u.img, g.group_name "
                     + "FROM group_join_requests r "
                     + "JOIN users u ON r.user_id = u.unique_id "
                     + "JOIN `groups` g ON r.group_id = g.group_id "
@@ -49,6 +49,7 @@ public class GroupJoinRequestsServlet extends HttpServlet {
                     while (rs.next()) {
                         Map<String, String> requests = new HashMap<>();
                         requests.put("request_id", rs.getString("request_id"));
+                        requests.put("image", rs.getString("img"));
                         requests.put("user_id", rs.getString("user_id"));
                         requests.put("user_fname", rs.getString("fname"));
                          requests.put("user_lname", rs.getString("lname"));

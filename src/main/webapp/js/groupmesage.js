@@ -31,7 +31,7 @@ async function fetchMessages() {
                 const isOutgoing = senderId === message.senderId;
                 const messageContent = `
                     ${message.messageText ? `<p>${message.messageText}</p>` : ""}
-                    ${message.attachmentPath ? `<img src="/ChatAPP/GroupImage/${message.attachmentPath}" alt="Sent image">` : ""}
+                    ${message.attachmentPath ? `<img src="/ChatAPP/${message.attachmentPath}" alt="Sent image">` : ""}
                 `;
 
                 messageHTML += `
@@ -83,9 +83,11 @@ async function fetchGroup() {
             groupElement.innerHTML = `
               <a href="http://localhost:8080/ChatAPP/GroupDisplayServlet" class="back-icon"><i class="fas fa-arrow-left"></i></a>
 
-                <img src="/ChatAPP/groupimge/${groupDetail.groupImage}" alt="Group Image">
+                <img src="/ChatAPP/groupImages${groupDetail.groupImage}" alt="Group Image">
+				
                 <strong>${groupDetail.groupName}</strong>
             `;
+			console.log(groupDetail.groupImage);
         } else {
             console.error("Failed to fetch group details:", response.statusText);
         }
@@ -166,7 +168,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     fetchGroup();
-    setInterval(fetchMessages, 700);
+	fetchMessages();
+	
+   // setInterval(fetchMessages, 700);
 
     CHATBOX.onmouseenter = () => {
         CHATBOX.classList.add("active");

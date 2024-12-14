@@ -32,12 +32,12 @@
                     for (Map<String, String> user : searchResults) {
             %>
             <div class="friend-request-item">
-                <img src="<%= request.getServletContext()+"/uploads/"+user.get("image") %>" alt="Profile Picture">
+                <img src="<%="uploads/"+user.get("image") %>" alt="Profile Picture">
                 <div class="friend-info">
                     <p class="name"><%= user.get("fname")+" "+user.get("lname") %></p>
                     <p class="details"><%= user.get("email") %></p>
                 </div>
-p                <form action="SendFriendRequestServlet" method="post">
+                 <form action="SendFriendRequestServlet" method="post">
                 
                 <!-- unique_id of another people -->
                 
@@ -67,7 +67,7 @@ p                <form action="SendFriendRequestServlet" method="post">
                     	System.out.println("something has get from Requestreceived");
             %>
             <div class="friend-request-item">
-                <img src="<%= request.getServletContext()+"/uploads/"+req.get("sender_image") %>" alt="Profile Picture">
+                <img src="<%="uploads/"+req.get("sender_image") %>" alt="Profile Picture">
                 <div class="friend-info">
                 
                     <p class="name"><%= req.get("fname")+" "+req.get("lname") %></p>

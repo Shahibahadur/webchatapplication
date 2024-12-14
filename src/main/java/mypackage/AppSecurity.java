@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class AppSecurity {
-	protected static String encript(String message) throws NoSuchAlgorithmException{
+	/*protected */ public static String encript(String message) throws NoSuchAlgorithmException{
 		String temp = encriptMD5(message);
 		String encriptedPassword = encriptSHA256(temp);
 		return encriptedPassword;

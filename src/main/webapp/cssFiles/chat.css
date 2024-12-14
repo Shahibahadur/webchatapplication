@@ -68,9 +68,12 @@
     cursor: pointer;
 }
 .chat img {
-    max-width: 10px;
-    height: auto;
-    border-radius: 8px; /* Rounded corners */
-    border: 2px solid #ccc; /* Light border around the image */
-    margin-top: 5px; /* Some space above the image */
+    max-width: 200px; /* Larger width for a clearer image */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 12px; /* More rounded corners */
+    border: none; /* Remove the solid border */
+    margin: 5px 0; /* Add spacing above and below the image */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Soft shadow for a floating effect */
+    display: block; /* Ensure it behaves like a block element in the chat bubble */
+    background-color: #f0f0f0; /* Optional: Light background for a message bubble effect */
 }

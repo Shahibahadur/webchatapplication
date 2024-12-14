@@ -40,6 +40,7 @@ public class GetGroupsServlet extends HttpServlet {
                     group.put("group_id", String.valueOf(rs.getInt("group_id")));
                     group.put("group_name", rs.getString("group_name"));
                     group.put("image", rs.getString("image"));
+                    System.out.println(rs.getString("group_name")+"from get groupServlet");
                     groups.add(group);
                 }
             }

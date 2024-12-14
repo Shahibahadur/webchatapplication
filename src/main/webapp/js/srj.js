@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             requests.forEach(req => {
                 const requestDiv = document.createElement("div");
                 requestDiv.innerHTML = `
+					<img src='uploads/${req.image}' alt = "profile picture">
                     <p>${req.user_fname} ${req.user_lname} wants to join ${req.group_name}</p>
                     <button data-request-id="${req.request_id}" data-action="approve">Approve</button>
                     <button data-request-id="${req.request_id}" data-action="reject">Reject</button>
