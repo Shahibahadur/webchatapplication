@@ -41,6 +41,26 @@ function renderAdmins() {
 
 // Function to render user table
 function renderUsers() {
+
+    //testing code 
+    let users;
+
+   try{
+    const response = await fetch("http://localhost:8080/ChatApp/ManagingUsers");
+        if(!response.ok){
+            throw new  Error("failed to fetch manage user request");
+        }
+         users = await response.json;
+    }catch(error){
+        console.error("Error in loading data :", error);
+        throw error;
+    }
+
+
+    //testing code 
+
+
+    
     const userTableBody = document.getElementById("userTableBody");
     userTableBody.innerHTML = "";
     users.forEach(user => {
@@ -55,6 +75,23 @@ function renderUsers() {
 
 // Function to render group table
 function renderGroups() {
+
+    const groups;
+    //testing
+    try{
+    const response = await fetch("http://localhost:8080/ChatAPP/ManageGroups");
+        if(!response.ok){
+
+            throw new Error("Failed to fetch groups details");
+            
+        }
+        
+    }catch(error){
+        console.error("error in loading data: ", error);
+    }
+
+
+    
     const groupTableBody = document.getElementById("groupTableBody");
     groupTableBody.innerHTML = "";
     groups.forEach(group => {
@@ -70,12 +107,39 @@ function renderGroups() {
 // Remove user
 function removeUser(id) {
     users = users.filter(user => user.id !== id);
+    try{
+        const response = await fetch("http://localhost:8080/ChatAPP/DeleteUSers",{
+                                    method: "POST",
+                                    headers:{"Content_type":"application/x-www-form-urlencoded"},
+                                    body:`user_id=${encodeURIComponent(id)}`
+                                    });
+        if(!response.ok){
+            throw new Error("failed to remove the users");
+        }
+    }catch(error){
+        console.log("user not removed: ", error);
+    }
+    //testing
     renderUsers();
 }
 
 // Remove group
 function removeGroup(id) {
     groups = groups.filter(group => group.id !== id);
+    //testing
+    try{
+
+        const response = await fetch("http://localhost:8080/ChatAPP/DeleteGroup",{
+            method : "POST",
+            headers : {"Content-Type":"application/x-www-form-urlencoded"}
+        });
+    }catch(error){
+        console.log("error in loading data: ",error);
+    }
+
+    
+
+    //testing
     renderGroups();
 }
 
