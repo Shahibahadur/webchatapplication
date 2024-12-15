@@ -1,23 +1,20 @@
 package admin;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.regex.Pattern;
+
+import Encryption.SHA2Util;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
-import java.util.regex.Pattern;
-
 import mypackage.DatabaseConfig;
-import mypackage.AppSecurity;
 
 /**
  * Servlet implementation class AdminLoginServlet
@@ -58,7 +55,7 @@ public class AdminLoginServlet extends HttpServlet {
 			Pattern pattern = Pattern.compile(regex);
 			if(pattern.matcher(email).matches()){
 				try{
-					String passwordHash = AppSecurity.encript(password);;
+					String passwordHash = SHA2Util.generateSHA256(password);;
 					Connection conn = new DatabaseConfig().getConnection();
 					String sql = "SELECT from admin where password = ? and email = ?";
 					PreparedStatement pstmt = conn.prepareStatement(sql);
