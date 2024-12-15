@@ -10,6 +10,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class DeleteGroup
  */
+@WebServlet("/DeleteGroup")
 public class DeleteGroup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,7 +35,39 @@ public class DeleteGroup extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+	tey{
+		int groupId = Integer.parseInt(request.getParameter("groupId"));
+
+		boolean success = delete(groupId);
+		if(success){
+			response.setStatus(HttpServleteResponse.SC_OK);
+		}else{
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+		
+	}catch(Exception e){
+		e.printStackTrace();
+		response.setStatus(HttpServletResponse.SC_BAD_REQUEST)
+		//doGet(request, response);
+	}
+	}
+
+	private boolean delete(int groupId){
+
+		try{
+			Connection conn = new DatabaeConfig().getConnection();
+
+			String sql = "DELETE FROM `groups` WHERE group_id = ?";
+			PreparedStatement stmt= conn.prepareStatement(sql);
+			stmt.setInt(1, groupId);
+			int result  = stmt.executeUpdate();
+			return  result > 0;
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 
 }
