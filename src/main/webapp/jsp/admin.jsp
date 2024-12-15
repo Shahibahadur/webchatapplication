@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="http://localhost:8080/ChatAPP/cssFiles/admin.css">
 </head>
 <body>
     <header>
@@ -57,6 +57,6 @@
             <tbody id="groupTableBody"></tbody>
         </table>
     </div>
-    <script src="admin.js"></script>
+    <script src="http://localhost:8080/ChatAPP/js/admin.js"></script>
 </body>
 </html>

@@ -50,14 +50,17 @@ public class AdminLoginServlet extends HttpServlet {
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		System.out.println(password);
 		if(!email.isBlank() && !password.isBlank()){
 			String regex = "^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 			Pattern pattern = Pattern.compile(regex);
 			if(pattern.matcher(email).matches()){
 				try{
-					String passwordHash = SHA2Util.generateSHA256(password);;
+					String passwordHash = SHA2Util.generateSHA256(password);
+					System.out.println(passwordHash);
+
 					Connection conn = new DatabaseConfig().getConnection();
-					String sql = "SELECT from admin where password = ? and email = ?";
+					String sql = "SELECT * from admin where password = ? and email = ?";
 					PreparedStatement pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1,passwordHash);
 					pstmt.setString(2,email);
@@ -71,8 +74,8 @@ public class AdminLoginServlet extends HttpServlet {
 				
 				if(i>0){
 					HttpSession session = request.getSession();
-					session.setAttribute("adminId",rs.getString("unique_id)"));
-					out.write("sucess");
+					session.setAttribute("adminId",rs.getString("unique_id"));
+					out.write("success");
 				}
 				
 				}else{

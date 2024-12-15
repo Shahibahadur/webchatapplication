@@ -112,4 +112,24 @@
     <servlet-name>AdminLogin</servlet-name>
     <url-pattern>/AdminLogin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteUsers</display-name>
+    <servlet-name>DeleteUsers</servlet-name>
+    <servlet-class>admin.DeleteUsers</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteUsers</servlet-name>
+    <url-pattern>/DeleteUsers</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteGroup</display-name>
+    <servlet-name>DeleteGroup</servlet-name>
+    <servlet-class>admin.DeleteGroup</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteGroup</servlet-name>
+    <url-pattern>/DeleteGroup</url-pattern>
+  </servlet-mapping>
 </web-app>

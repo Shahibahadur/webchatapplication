@@ -11,6 +11,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +20,8 @@ import mypackage.DatabaseConfig;
 /**
  * Servlet implementation class ManagingGroups
  */
+
+@WebServlet("/ManagingUsers")
 public class ManagingGroups extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -44,15 +47,16 @@ public class ManagingGroups extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		Map<Integer,String> groups = new HashMap<>();
+		Map<String,String> groups = new HashMap<>();
 		try{
 			Connection conn = new DatabaseConfig().getConnection();
 
-			String sql = "SELECT group_id, groupName FROM `groups`";
+			String sql = "SELECT group_id, group_name FROM `groups`";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()){
-				groups.put(rs.getInt("group_id"),rs.getString("group_name"));
+				groups.put("groupId", String.valueOf(rs.getInt("group_id")));
+				groups.put("groupName",rs.getString("group_name"));
 			}
 			
 			

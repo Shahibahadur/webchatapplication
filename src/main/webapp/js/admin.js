@@ -14,7 +14,8 @@ const admins = [
 ];
 
 // Dummy data for users and groups
-let users = [
+
+/*let users = [
     { id: 1, name: "John Doe" },
     { id: 2, name: "Jane Smith" },
     { id: 3, name: "Alice Johnson" },
@@ -23,7 +24,9 @@ let users = [
 let groups = [
     { id: 1, name: "Science Club" },
     { id: 2, name: "Literature Group" },
-];
+];*/
+
+
 
 // Function to render admin table
 function renderAdmins() {
@@ -40,7 +43,7 @@ function renderAdmins() {
 }
 
 // Function to render user table
-function renderUsers() {
+async function renderUsers() {
 
     //testing code 
     let users;
@@ -50,7 +53,7 @@ function renderUsers() {
         if(!response.ok){
             throw new  Error("failed to fetch manage user request");
         }
-         users = await response.json;
+         users = await response.json();
     }catch(error){
         console.error("Error in loading data :", error);
         throw error;
@@ -74,9 +77,9 @@ function renderUsers() {
 }
 
 // Function to render group table
-function renderGroups() {
+async function renderGroups() {
 
-    const groups;
+    let groups;
     //testing
     try{
     const response = await fetch("http://localhost:8080/ChatAPP/ManageGroups");
@@ -85,7 +88,7 @@ function renderGroups() {
             throw new Error("Failed to fetch groups details");
             
         }
-        
+        groups = response.json();
     }catch(error){
         console.error("error in loading data: ", error);
     }
@@ -96,16 +99,16 @@ function renderGroups() {
     groupTableBody.innerHTML = "";
     groups.forEach(group => {
         const row = `<tr>
-            <td>${group.id}</td>
-            <td>${group.name}</td>
-            <td><button class="btn" onclick="removeGroup(${group.id})">Remove</button></td>
+            <td>${group.groupId}</td>
+            <td>${group.groupName}</td>
+            <td><button class="btn" onclick="removeGroup(${group.groupId})">Remove</button></td>
         </tr>`;
         groupTableBody.innerHTML += row;
     });
 }
 
 // Remove user
-function removeUser(id) {
+async function removeUser(id) {
     users = users.filter(user => user.id !== id);
     try{
         const response = await fetch("http://localhost:8080/ChatAPP/DeleteUSers",{
@@ -123,25 +126,8 @@ function removeUser(id) {
     renderUsers();
 }
 
-// Remove group
-function removeGroup(id) {
-    groups = groups.filter(group => group.id !== id);
-    //testing
-    try{
 
-        const response = await fetch("http://localhost:8080/ChatAPP/DeleteGroup",{
-            method : "POST",
-            headers : {"Content-Type":"application/x-www-form-urlencoded"}
-        });
-    }catch(error){
-        console.log("error in loading data: ",error);
-    }
 
-    
-
-    //testing
-    renderGroups();
-}
 
 // Function to handle tab switching
 function showSection(sectionId) {
@@ -166,7 +152,7 @@ function showSection(sectionId) {
 
 
 // Remove user with confirmation
-function removeUser(id) {
+/*function removeUser(id) {
     // Show confirmation alert before removing the user
     const confirmation = confirm("Are you sure you want to remove this user?");
     if (confirmation) {
@@ -177,16 +163,25 @@ function removeUser(id) {
         // If the user clicks "Cancel," do nothing
         console.log("User removal canceled");
     }
-}
+}*/
 
 // Remove group with confirmation
-function removeGroup(id) {
+async function removeGroup(groupId) {
     // Show confirmation alert before removing the group
     const confirmation = confirm("Are you sure you want to remove this group?");
     if (confirmation) {
         // Filter out the group with the given ID
-        groups = groups.filter(group => group.id !== id);
-        renderGroups(); // Re-render the group table
+		groups = groups.filter(group => group.groupId !== groupId);
+		   //testing
+		   try{
+
+		       const response = await fetch("http://localhost:8080/ChatAPP/DeleteGroup",{
+		           method : "POST",
+		           headers : {"Content-Type":"application/x-www-form-urlencoded"}
+		       });
+		   }catch(error){
+		       console.log("error in loading data: ",error);
+		   }; // Re-render the group table
     } else {
         // If the user clicks "Cancel," do nothing
         console.log("Group removal canceled");

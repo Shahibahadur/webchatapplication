@@ -8,17 +8,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class ManagingUsers
+ * Servlet implementation class DeleteUsers
  */
-
-@WebServlet("/ManagingUsers")
-public class ManagingUsers extends HttpServlet {
+public class DeleteUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagingUsers() {
+    public DeleteUser() {
         super();
         // TODO Auto-generated constructor stub
     }

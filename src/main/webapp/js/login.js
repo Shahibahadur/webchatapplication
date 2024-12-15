@@ -115,7 +115,7 @@ function submitForm() {
         loginUrl = "http://localhost:8080/ChatAPP/Login"; // URL for user login
 		console.log(role);
     } else if (role === "admin") {
-        loginUrl = "http://localhost:8080/ChatAPP/adminLoginServlet"; // URL for admin login
+        loginUrl = "http://localhost:8080/ChatAPP/adminLogin"; // URL for admin login
     }
 
     // Send data to the appropriate servlet based on role
@@ -135,7 +135,7 @@ function submitForm() {
                 if (role === "user") {
                     location.href = "/ChatAPP/user-chatbox"; // Redirect to user chatbox
                 } else if (role === "admin") {
-                    location.href = "/ChatAPP/admin-dashboard"; // Redirect to admin dashboard
+                    location.href = "/ChatAPP/jsp/admin.jsp"; // Redirect to admin dashboard
                 }
 
                 // Style the success message
