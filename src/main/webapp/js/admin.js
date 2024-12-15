@@ -171,14 +171,21 @@ async function removeGroup(groupId) {
     const confirmation = confirm("Are you sure you want to remove this group?");
     if (confirmation) {
         // Filter out the group with the given ID
-		groups = groups.filter(group => group.groupId !== groupId);
+		//groups = groups.filter(group => group.groupId !== groupId);
 		   //testing
 		   try{
 
 		       const response = await fetch("http://localhost:8080/ChatAPP/DeleteGroup",{
 		           method : "POST",
 		           headers : {"Content-Type":"application/x-www-form-urlencoded"}
+			   body:`groupId = ${encodeURIComponent(groupId)}`
 		       });
+			   if(!response.ok){
+				   throw new Error("request is not reached to its destination");
+			   }
+
+			   renderGroups();
+			   
 		   }catch(error){
 		       console.log("error in loading data: ",error);
 		   }; // Re-render the group table
