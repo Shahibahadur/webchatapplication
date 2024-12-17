@@ -1,5 +1,3 @@
-// admin.js
-
 // Dummy data for logged-in admin user
 const loggedInUser = {
     name: "Admin John",
@@ -12,20 +10,6 @@ const admins = [
     { id: 2, name: "Admin Jane", status: "Inactive" },
     { id: 3, name: "Admin Mike", status: "Active" },
 ];
-
-// Dummy data for users and groups
-
-/*let users = [
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Jane Smith" },
-    { id: 3, name: "Alice Johnson" },
-];
-
-let groups = [
-    { id: 1, name: "Science Club" },
-    { id: 2, name: "Literature Group" },
-];*/
-
 
 
 // Function to render admin table
@@ -41,6 +25,85 @@ function renderAdmins() {
         adminTableBody.innerHTML += row;
     });
 }
+
+
+
+// Function to render group table
+async function renderGroups() {
+    let groups;
+
+    // Fetch group data
+    try {
+        const response = await fetch("http://localhost:8080/ChatAPP/ShowGroups");
+        if (!response.ok) {
+            throw new Error("Failed to fetch group details");
+        }
+        groups = await response.json();
+    } catch (error) {
+        console.error("Error in loading data: ", error);
+        const groupTableBody = document.getElementById("groupTableBody");
+        groupTableBody.innerHTML = `<tr><td colspan="3">Failed to load group details. Please try again later.</td></tr>`;
+        return;
+    }
+
+    // Safeguard if no groups are fetched
+    if (!groups || groups.length === 0) {
+        console.warn("No groups available to display.");
+        const groupTableBody = document.getElementById("groupTableBody");
+        groupTableBody.innerHTML = `<tr><td colspan="3">No groups found.</td></tr>`;
+        return;
+    }
+
+    // Populate the table with group data
+    const groupTableBody = document.getElementById("groupTableBody");
+    let rows = "";
+    groups.forEach(group => {
+        rows += `
+            <tr>
+                <td>${group.groupId}</td>
+                <td>${group.groupName}</td>
+                <td><button class="btn" onclick="removeGroup(${group.groupId})">Remove</button></td>
+            </tr>`;
+    });
+    groupTableBody.innerHTML = rows;
+}
+
+
+// Remove group with confirmation
+
+async function removeGroup(groupId) {
+    // Show confirmation alert before removing the group
+    const confirmation = confirm("Are you sure you want to remove this group?");
+    if (confirmation) {
+        // Filter out the group with the given ID
+		//groups = groups.filter(group => group.groupId !== groupId);
+		   //testing
+		   try{
+
+		       const response = await fetch("http://localhost:8080/ChatAPP/DeleteGroup",{
+		           method : "POST",
+		           headers : {"Content-Type":"application/x-www-form-urlencoded"},
+			   	body:`groupId = ${encodeURIComponent(groupId)}`
+		       });
+			   if(!response.ok){
+				   throw new Error("request is not reached to its destination");
+			   }
+
+			   renderGroups();
+			   
+		   }catch(error){
+		       console.log("error in loading data: ",error);
+		   }; // Re-render the group table
+    } else {
+        // If the user clicks "Cancel," do nothing
+        console.log("Group removal canceled");
+    }
+}
+
+
+
+
+
 
 // Function to render user table
 async function renderUsers() {
@@ -76,54 +139,35 @@ async function renderUsers() {
     });
 }
 
-// Function to render group table
-async function renderGroups() {
-
-    let groups;
-    //testing
-    try{
-    const response = await fetch("http://localhost:8080/ChatAPP/ManageGroups");
-        if(!response.ok){
-
-            throw new Error("Failed to fetch groups details");
-            
-        }
-        groups = response.json();
-    }catch(error){
-        console.error("error in loading data: ", error);
-    }
-
-
-    
-    const groupTableBody = document.getElementById("groupTableBody");
-    groupTableBody.innerHTML = "";
-    groups.forEach(group => {
-        const row = `<tr>
-            <td>${group.groupId}</td>
-            <td>${group.groupName}</td>
-            <td><button class="btn" onclick="removeGroup(${group.groupId})">Remove</button></td>
-        </tr>`;
-        groupTableBody.innerHTML += row;
-    });
-}
-
-// Remove user
+// Remove user with confirmation
 async function removeUser(id) {
-    users = users.filter(user => user.id !== id);
-    try{
-        const response = await fetch("http://localhost:8080/ChatAPP/DeleteUSers",{
-                                    method: "POST",
-                                    headers:{"Content_type":"application/x-www-form-urlencoded"},
-                                    body:`user_id=${encodeURIComponent(id)}`
-                                    });
-        if(!response.ok){
-            throw new Error("failed to remove the users");
-        }
-    }catch(error){
-        console.log("user not removed: ", error);
+    // Show confirmation alert before removing the user
+    const confirmation = confirm("Are you sure you want to remove this user?");
+    if (confirmation) {
+        // Filter out the user with the given ID
+        //users = users.filter(user => user.id !== id);
+		
+		users = users.filter(user => user.id !== id);
+		   try{
+		       const response = await fetch("http://localhost:8080/ChatAPP/DeleteUSers",{
+		                                   method: "POST",
+		                                   headers:{"Content_type":"application/x-www-form-urlencoded"},
+		                                   body:`user_id=${encodeURIComponent(id)}`
+		                                   });
+		       if(!response.ok){
+		           throw new Error("failed to remove the users");
+		       }
+		   }catch(error){
+		       console.log("user not removed: ", error);
+		   }
+		   //testing
+		   renderUsers();
+		
+        renderUsers(); // Re-render the user table
+    } else {
+        // If the user clicks "Cancel," do nothing
+        console.log("User removal canceled");
     }
-    //testing
-    renderUsers();
 }
 
 
@@ -151,49 +195,8 @@ function showSection(sectionId) {
 }
 
 
-// Remove user with confirmation
-/*function removeUser(id) {
-    // Show confirmation alert before removing the user
-    const confirmation = confirm("Are you sure you want to remove this user?");
-    if (confirmation) {
-        // Filter out the user with the given ID
-        users = users.filter(user => user.id !== id);
-        renderUsers(); // Re-render the user table
-    } else {
-        // If the user clicks "Cancel," do nothing
-        console.log("User removal canceled");
-    }
-}*/
 
-// Remove group with confirmation
-async function removeGroup(groupId) {
-    // Show confirmation alert before removing the group
-    const confirmation = confirm("Are you sure you want to remove this group?");
-    if (confirmation) {
-        // Filter out the group with the given ID
-		//groups = groups.filter(group => group.groupId !== groupId);
-		   //testing
-		   try{
 
-		       const response = await fetch("http://localhost:8080/ChatAPP/DeleteGroup",{
-		           method : "POST",
-		           headers : {"Content-Type":"application/x-www-form-urlencoded"}
-			   body:`groupId = ${encodeURIComponent(groupId)}`
-		       });
-			   if(!response.ok){
-				   throw new Error("request is not reached to its destination");
-			   }
-
-			   renderGroups();
-			   
-		   }catch(error){
-		       console.log("error in loading data: ",error);
-		   }; // Re-render the group table
-    } else {
-        // If the user clicks "Cancel," do nothing
-        console.log("Group removal canceled");
-    }
-}
 
 
 // Initialize page
