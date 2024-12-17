@@ -112,15 +112,24 @@ async function renderUsers() {
     let users;
 
    try{
-    const response = await fetch("http://localhost:8080/ChatApp/ManagingUsers");
+    const response = await fetch("http://localhost:8080/ChatApp/ShowUsers");
         if(!response.ok){
             throw new  Error("failed to fetch manage user request");
         }
          users = await response.json();
     }catch(error){
         console.error("Error in loading data :", error);
-        throw error;
+	const userTableBody = document.getElementById("userTableBody");
+	userTableBody.innerHTML = `<tr><td colspan = "3">Failed to load users details. Please try again later</td></tr>`;
+	   return;
+	   
     }
+
+	if(!users || users.length === 0){
+		console.warn("No users avilable to show");
+		const userTableBody = document.getElementById("userTableBody");
+		userTableBody.innerHtml = `<tr><td colspan= "3">No users available</td></tr>`;
+	}
 
 
     //testing code 
