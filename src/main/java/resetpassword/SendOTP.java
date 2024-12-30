@@ -1,8 +1,10 @@
 package resetpassword;
-import mypackage.DatabaseConfig;
-
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Properties;
+
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.PasswordAuthentication;
@@ -17,6 +19,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import mypackage.DatabaseConfig;
 
 @WebServlet("/SendOTP")
 public class SendOTP extends HttpServlet {
@@ -25,6 +28,8 @@ public class SendOTP extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userEmail = request.getParameter("email");
+        
+        
 
         // Validate email format
         
@@ -39,6 +44,27 @@ public class SendOTP extends HttpServlet {
             return;
         }
         
+        try (Connection conn = new DatabaseConfig().getConnection(); 
+        	     PreparedStatement pstmt = conn.prepareStatement("SELECT email FROM users WHERE email = ?")) {
+        	    
+        	    // Set the email parameter
+        	    String email = request.getParameter("email");
+        	    pstmt.setString(1, email);
+        	    
+        	    // Execute the query
+        	    try (ResultSet rs = pstmt.executeQuery()) {
+        	        if (!rs.next()) { // Check if the result set is empty
+        	            request.setAttribute("error", "Email not found!");
+        	            request.getRequestDispatcher("/jsp/forgetpassword.jsp").forward(request, response);
+        	            return;
+        	        }
+        	    }
+        	} catch (Exception e) {
+        	    e.printStackTrace();
+        	    request.setAttribute("error", "An error occurred while processing your request.");
+        	    request.getRequestDispatcher("/jsp/forgetpassword.jsp").forward(request, response);
+        	}
+
 
         // Generate OTP
         int otp = (int) (Math.random() * 900000) + 100000;
