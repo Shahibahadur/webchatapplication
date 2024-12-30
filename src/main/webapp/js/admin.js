@@ -72,6 +72,7 @@ async function renderGroups() {
 // Remove group with confirmation
 
 async function removeGroup(groupId) {
+	console.log(groupId);
     // Show confirmation alert before removing the group
     const confirmation = confirm("Are you sure you want to remove this group?");
     if (confirmation) {
@@ -83,16 +84,18 @@ async function removeGroup(groupId) {
 		       const response = await fetch("http://localhost:8080/ChatAPP/DeleteGroup",{
 		           method : "POST",
 		           headers : {"Content-Type":"application/x-www-form-urlencoded"},
-			   	body:`groupId = ${encodeURIComponent(groupId)}`
+			   	body:`groupId=${encodeURIComponent(groupId)}`
 		       });
 			   if(!response.ok){
-				   throw new Error("request is not reached to its destination");
+				   throw new Error("Failed to delete the group");
 			   }
 
 			   renderGroups();
 			   
 		   }catch(error){
-		       console.log("error in loading data: ",error);
+		       console.log("error in removing  group: ",error);
+			   alert("Failed to remove the  group.Please try again");
+			   
 		   }; // Re-render the group table
     } else {
         // If the user clicks "Cancel," do nothing
@@ -107,70 +110,77 @@ async function removeGroup(groupId) {
 
 // Function to render user table
 async function renderUsers() {
-
-    //testing code 
+    const userTableBody = document.getElementById("userTableBody");
     let users;
 
-   try{
-    const response = await fetch("http://localhost:8080/ChatApp/ShowUsers");
-        if(!response.ok){
-            throw new  Error("failed to fetch manage user request");
+    try {
+        // Fetch user details from the server
+        const response = await fetch("http://localhost:8080/ChatAPP/ShowUsers");
+		console.log(response);
+        if (!response.ok) {
+            throw new Error("Failed to fetch user details");
         }
-         users = await response.json();
-    }catch(error){
-        console.error("Error in loading data :", error);
-	const userTableBody = document.getElementById("userTableBody");
-	userTableBody.innerHTML = `<tr><td colspan = "3">Failed to load users details. Please try again later</td></tr>`;
-	   return;
-	   
+        users = await response.json();
+    } catch (error) {
+        console.error("Error in loading data:", error);
+        userTableBody.innerHTML = `<tr><td colspan="3" class="error">Failed to load user details. Please try again later.</td></tr>`;
+        return;
     }
 
-	if(!users || users.length === 0){
-		console.warn("No users avilable to show");
-		const userTableBody = document.getElementById("userTableBody");
-		userTableBody.innerHtml = `<tr><td colspan= "3">No users available</td></tr>`;
-	}
+    // Handle empty state
+    if (!users || users.length === 0) {
+        console.warn("No users available to show");
+        userTableBody.innerHTML = `<tr><td colspan="3" class="empty">No users available</td></tr>`;
+        return;
+    }
 
-
-    //testing code 
-
-
-    
-    const userTableBody = document.getElementById("userTableBody");
-    userTableBody.innerHTML = "";
+    // Populate the user table
+    const fragment = document.createDocumentFragment();
     users.forEach(user => {
-        const row = `<tr>
-            <td>${user.id}</td>
-            <td>${user.name}</td>
-            <td><button class="btn" onclick="removeUser(${user.id})">Remove</button></td>
-        </tr>`;
-        userTableBody.innerHTML += row;
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${user.uniqueId}</td>
+            <td>${user.userName}</td>
+            <td><button class="btn" onclick="removeUser('${encodeURIComponent(user.uniqueId)}')">Remove</button></td>
+        `;
+        fragment.appendChild(row);
     });
+    userTableBody.innerHTML = ""; // Clear existing rows
+    userTableBody.appendChild(fragment); // Append all rows at once
 }
+
 
 // Remove user with confirmation
 async function removeUser(id) {
+	console.log(id);
     // Show confirmation alert before removing the user
     const confirmation = confirm("Are you sure you want to remove this user?");
     if (confirmation) {
-        // Filter out the user with the given ID
-        //users = users.filter(user => user.id !== id);
-		
-		users = users.filter(user => user.id !== id);
 		   try{
-		       const response = await fetch("http://localhost:8080/ChatAPP/DeleteUSers",{
+		       const response = await fetch("http://localhost:8080/ChatAPP/DeleteUser",{
 		                                   method: "POST",
-		                                   headers:{"Content_type":"application/x-www-form-urlencoded"},
-		                                   body:`user_id=${encodeURIComponent(id)}`
+		                                   headers:{"Content-type":"application/x-www-form-urlencoded"},
+		                                   body:`userId=${encodeURIComponent(id)}`
 		                                   });
+			   console.log("response object: "+response);
 		       if(!response.ok){
-		           throw new Error("failed to remove the users");
+			       conseole.error("Failed to remove user: ", response.status, response.statusText);
+		           throw new Error("failed to remove the users. HTTP status: "+response.status);
 		       }
+			   
+			   const responseData = await response.json();
+			   console.log("Response from Server:", responseData);
+			   
+			   if(responseData.success){
+				console.log("user removed suceessfully");
+			   }else if(responseData.error){
+				console.error("Error from the Server: ", responseData.error);
+				
+			   }			   
 		   }catch(error){
-		       console.log("user not removed: ", error);
+		       console.log("Error while removing user: ", error);
 		   }
-		   //testing
-		   renderUsers();
+		  
 		
         renderUsers(); // Re-render the user table
     } else {

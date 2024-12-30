@@ -11,67 +11,52 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import mypackage.DatabaseConfig;
 
-/**
- * Servlet implementation class DeleteGroup
- */
 @WebServlet("/DeleteGroup")
 public class DeleteGroup extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    private static final long serialVersionUID = 1L;
+
     public DeleteGroup() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String groupIdParam = request.getParameter("groupId");
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	try{
-		int groupId = Integer.parseInt(request.getParameter("groupId"));
+        // Validate the groupId parameter
+        if (groupIdParam == null || groupIdParam.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("{\"error\": \"Invalid group ID\"}");
+            return;
+        }
 
-		boolean success = delete(groupId);
-		if(success){
-			response.setStatus(HttpServletResponse.SC_OK);
-		}else{
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		}
-		
-	}catch(Exception e){
-		e.printStackTrace();
-		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		//doGet(request, response);
-	}
-	}
+        int groupId;
+        try {
+            groupId = Integer.parseInt(groupIdParam);
+        } catch (NumberFormatException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("{\"error\": \"Group ID must be a number\"}");
+            return;
+        }
 
-	private boolean delete(int groupId){
+        try (Connection conn = new DatabaseConfig().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement("DELETE FROM `groups` WHERE group_id = ?")) {
 
-		try{
-			Connection conn = new DatabaseConfig().getConnection();
+            pstmt.setInt(1, groupId);
+            int rowsAffected = pstmt.executeUpdate();
 
-			String sql = "DELETE FROM `groups` WHERE group_id = ?";
-			PreparedStatement stmt= conn.prepareStatement(sql);
-			stmt.setInt(1, groupId);
-			int result  = stmt.executeUpdate();
-			return  result > 0;
-			
-		}catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
-		
-	}
+            if (rowsAffected > 0) {
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().write("{\"success\": \"Group deleted successfully\"}");
+            } else {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                response.getWriter().write("{\"error\": \"Group not found\"}");
+            }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"error\": \"Failed to delete the group\"}");
+        }
+    }
 }

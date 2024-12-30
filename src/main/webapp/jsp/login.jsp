@@ -142,6 +142,9 @@
                     <option value="admin">Administrator</option>
                 </select>
             </div>
+            <div>
+            <a href="/ChatAPP/jsp/forgetpassword.jsp">Forget Password</a>
+           </div>
             <div class="field button">
                 <button type="button" id="submitButton" onclick="submitForm()">Continue to Chat</button>
             </div>
