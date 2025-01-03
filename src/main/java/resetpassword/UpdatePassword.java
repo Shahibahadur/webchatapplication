@@ -33,6 +33,7 @@ public class UpdatePassword extends HttpServlet {
 		}
 		
 		String email = (String) session.getAttribute("email");
+		System.out.println("email from updatePassword "+email);
 		
 		String newPassword = (String)request.getParameter("newPassword");
 		

@@ -22,36 +22,55 @@
     <div class="wrapper">
         <section class="form signup">
             <header><%= Const.app_name %></header>
-			<form action="<%= request.getContextPath() %>/signup1" method="POST" id="signupform" enctype="multipart/form-data">
+			<form id ="form" action="<%= request.getContextPath() %>/signup1" method="POST" id="signupform" enctype="multipart/form-data">
           <!--  request.getContextPath =http://localhost:8080/ChatAPP/signup1 -->
            <!-- which is mapped in web.xml which open SignUpServlet -->
            
            <!--  enctype define how the form data should be encoded while submitting 
             multipart/form-data, used while uploading the data -->
-                <div class="error-txt">This is an error message!</div>
+            
+                
+                
+				<%
+				    try {
+				        if (session.getAttribute("error_message") != null) {
+				%>
+				            <p style="color: red;"><%=session.getAttribute("error_message")%></p>
+				<%
+				            // Remove the error message after displaying it
+				            session.removeAttribute("error_message");
+							session.invalidate();
+							
+				        }
+				    } catch (Exception e) {
+				        e.printStackTrace();
+				    }
+				%>
+
+                <p id = "error" style = "color: red"></p>
                 <div class="name-details">
                     <div class="field input">
                         <label>First Name</label>
-                        <input type="text" name="fname" id="fname" placeholder="First Name" required>
+                        <input id = "fname" type="text" name="fname" placeholder="First Name" required>
                     </div>
                     <div class="field input">
                         <label>Last Name</label>
-                        <input type="text" name="lname" id="lname" placeholder="Last Name" required>
+                        <input id = "lname" type="text" name="lname" id="lname" placeholder="Last Name" required>
                     </div>
                 </div>    
                 
                 <div class="field input">
                     <label>Email Address</label>
-                    <input type="text" name="email" id="email" placeholder="Enter your email" required>
+                    <input id = "email" type="text" name="email" id="email" placeholder="Enter your email" required>
                 </div>
                 <div class="field input">
                     <label>Password</label>
-                    <input type="password" name="password" id="password" placeholder="Enter new Password" required>
+                    <input id = "password"  type="password" name="password" id="password" placeholder="Enter new Password" required>
                     <i class="fas fa-eye"></i>
                 </div>
                 <div class="field image">
                     <label>Select Image</label>
-                    <input type="file" name="image" accept="image/*">
+                    <input id = "image" type="file" name="image" accept="image/*">
                 </div>
                 <div class="field button">
                     <input type="submit" value="Continue to Chat">
@@ -61,6 +80,7 @@
             <div class="link">Already signed up? <a href="<%=request.getContextPath()%>/user-login">Login now</a></div>
         </section>
     </div>
+    <script src = "http://localhost:8080/ChatAPP/js/index.js"></script>
     <script src="http://localhost:8080/ChatAPP/js/pass_show_hode.js"></script>
     
 </body>
