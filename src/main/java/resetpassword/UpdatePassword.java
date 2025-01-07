@@ -28,7 +28,7 @@ public class UpdatePassword extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 		if (session == null || session.getAttribute("email") == null) {
-			response.sendRedirect("/jsp/forgetpassword.jsp");
+			response.sendRedirect("jsp/forgetpassword.jsp");
 			return;
 		}
 		
@@ -37,15 +37,15 @@ public class UpdatePassword extends HttpServlet {
 		
 		String newPassword = (String)request.getParameter("newPassword");
 		
-		String conformPassword =(String)request.getParameter("confirmPassword");
+		String conformPassword =(String)request.getParameter("conformPassword");
 		
-		System.out.println(newPassword);
-		System.out.println(conformPassword);
+		System.out.println(newPassword+"n");
+		System.out.println(conformPassword+"c");
 
 		if (newPassword == null || conformPassword == null || !newPassword.equals(conformPassword)) {
-			request.setAttribute("error", "Passwords do not match.");
+			request.setAttribute("error", "Passwords do not match from server.");
 			// Use relative path here
-			request.getRequestDispatcher("/jsp/setnewpassword.jsp").forward(request, response);
+			request.getRequestDispatcher("jsp/setnewpassword.jsp").forward(request, response);
 			return;
 		}
 
@@ -60,7 +60,7 @@ public class UpdatePassword extends HttpServlet {
 			response.getWriter().write("password Updated Successfully <a href='/ChatAPP/jsp/login.jsp'>LOGIN </a> ");
 		} else {
 			request.setAttribute("error", "passwsord is not update. please try again");
-			request.getRequestDispatcher("/jsp/setnewpassword.jsp").forward(request, response);
+			request.getRequestDispatcher("jsp/setnewpassword.jsp").forward(request, response);
 		}
 
 	}

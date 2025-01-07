@@ -38,26 +38,32 @@ public class GetChatServlet extends HttpServlet {
 				if(numOfRows > 0) {
 					while(set.next()) {
 						
-						if(set.getString("outgoing_msg_id").equalsIgnoreCase(outgoing_id)) {  // If the user is the sender
-						    output += "<div class=\"chat outgoing\">\n"
+						if (set.getString("outgoing_msg_id").equalsIgnoreCase(outgoing_id)) {  // If the user is the sender
+						    output += "<div class=\"chat outgoing\" onmouseover=\"showDots(this)\" onmouseout=\"hideDots(this)\">\n"
 						            + "  <div class=\"details\">\n";
 
-						    if(set.getString("msg") != null && !set.getString("msg").isBlank() && set.getString("imagePath") != null) {
+						    if (set.getString("msg") != null && !set.getString("msg").isBlank() && set.getString("imagePath") != null) {
 						        // If both message and image path exist
 						        output += "  <p>" + set.getString("msg") + "</p>\n"
-						                + "  <img src='"+req.getContextPath() +"/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
-						    } else if(set.getString("msg") != null && !set.getString("msg").isBlank()) {
+						                + "  <img src='" + req.getContextPath() + "/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
+						    } else if (set.getString("msg") != null && !set.getString("msg").isBlank()) {
 						        // If only the message exists
 						        output += "  <p>" + set.getString("msg") + "</p>\n";
-						    } else if(set.getString("imagePath") != null) {
+						    } else if (set.getString("imagePath") != null) {
 						        // If only the image exists
-						        output += "  <img src='"+req.getContextPath() +"/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
-						        
-						        System.out.println(output);
+						        output += "  <img src='" + req.getContextPath() + "/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
 						    }
+
+						    // Add three dots menu
+						    output += "  <div class=\"dots-menu\" style=\"display: none;\" onclick=\"toggleMenu(this)\">...</div>\n"
+						            + "  <div class=\"menu-options\" style=\"display: none;\">\n"
+						            + "    <button onclick=\"editMessage(this)\">Edit</button>\n"
+						            + "    <button onclick=\"deleteMessage(this)\">Delete</button>\n"
+						            + "  </div>\n";
 
 						    output += "  </div>\n"
 						            + "</div>";
+
 						} else { // If the user is the receiver
 						    output += "<div class=\"chat incoming\">\n"
 						            + "  <div class=\"details\">\n";

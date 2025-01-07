@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="http://localhost:8080/ChatAPP/cssFiles/friend.css">
 </head>
 <body>
-    <div class="friend-requests-container">
+    <div class="userFriends">
         <!-- Search Bar -->
         <div class="search-section">
             <form action="/ChatAPP/FriendSearchServlet" method="GET">
@@ -56,7 +56,7 @@
         
        <!--  check here request_id from table friend_rerquest -->
        
-        <div class="friend-requests-received">
+   <%--      <div class="friend-requests-received">
             <h3>Friend Requests Received</h3>
             <%
         	System.out.println("Nothing has get from Requestreceived");
@@ -87,7 +87,7 @@
             <% } } else { %>
             <p>No friend requests received.</p>
             <% } %>
-        </div>
+        </div> --%>
     </div>
 </body>
 </html>

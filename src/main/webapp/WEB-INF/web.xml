@@ -102,4 +102,14 @@
     <servlet-name>friendsearch</servlet-name>
     <url-pattern>/FriendSearchServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProceesRequestServlet</display-name>
+    <servlet-name>ProceesRequestServlet</servlet-name>
+    <servlet-class>friend.ProceesRequestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProceesRequestServlet</servlet-name>
+    <url-pattern>/ProceesRequestServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

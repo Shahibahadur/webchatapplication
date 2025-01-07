@@ -78,7 +78,7 @@
 					
 					
 					 <!-- Friend Request Icon -->
-		            <a href="http://localhost:8080/ChatAPP/friend-requests-received" title="Friend Requests">
+		            <a href="http://localhost:8080/ChatAPP/jsp/friend.jsp" title="Friend Requests">
 		                <i class="fas fa-user-friends"></i>
 		            </a>
 		
@@ -88,7 +88,7 @@
 		            </a>
 					
 					<!-- Notifications Icon -->
-					<a href="http://localhost:8080/ChatAPP/jsp/notifications.jsp" title="Notifications">
+					<a href="http://localhost:8080/ChatAPP/jsp/notification.jsp" title="Notifications">
 					    <i class="fas fa-bell"></i>
 					</a>
 					
