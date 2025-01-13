@@ -1,4 +1,4 @@
-// Function to fetch messages
+/*// Function to fetch messages
 async function fetchMessages() {
     const messageContainer = document.getElementById("messageContainer");
     const groupId = messageContainer.dataset.groupId;
@@ -57,7 +57,249 @@ async function fetchMessages() {
     } catch (error) {
         console.error("Error fetching messages:", error);
     }
+}*/
+
+
+
+
+async function fetchMessages() {
+    const messageContainer = document.getElementById("messageContainer");
+    const groupId = messageContainer.dataset.groupId;
+    const senderId = messageContainer.dataset.sender;
+
+    if (!groupId || !senderId) {
+        console.error("Missing group ID or sender ID in messageContainer dataset.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`/ChatAPP/GetMessage?groupId=${encodeURIComponent(groupId)}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (response.ok) {
+            const messages = await response.json();
+            const chatBox = document.querySelector(".chat-box");
+            let messageHTML = "";
+
+            messages.forEach((message) => {
+                if (!message.messageText && !message.attachmentPath) {
+                    return; // Skip messages without text and attachments
+                }
+
+                const isOutgoing = senderId === message.senderId;
+                let messageContent = "";
+                let attachmentContent = "";
+
+                // Build content for both message and attachment
+                if (message.messageText) {
+                    messageContent = `
+                        <p style="margin: 0; padding-right: 10px; flex: 1; border: none;">${message.messageText}</p>
+                        <span class="menu-trigger" onclick="toggleMenu(this)" style="cursor: pointer; font-size: 18px; color: #007bff;">...</span>
+                        <div class="menu" style="display: none;">
+                            <div onclick="deleteMessage('${message.timestamp}', '${message.messageText}')">Delete</div>
+                            <div onclick="editMessage('${message.timestamp}', '${message.messageText}')">Edit</div>
+                        </div>
+                    `;
+                }
+
+                if (message.attachmentPath) {
+                    attachmentContent = `
+                        <img src="/ChatAPP/${message.attachmentPath}" alt="Sent image" style="width: 50px; height: 50px; object-fit: cover; margin-right: 2px;">
+                        <span class="menu-trigger" onclick="toggleMenu(this)" style="cursor: pointer; font-size: 18px; color: #007bff;">...</span>
+                        <div class="menu" style="display: none;">
+                            <div onclick="deleteMessage('${message.timestamp}', '${message.attachmentPath}')">Delete</div>
+                        </div>
+                    `;
+                }
+
+                // Only append content if they are not null
+                const messageContentFinal = messageContent ? messageContent : "";
+                const attachmentContentFinal = attachmentContent ? attachmentContent : "";
+
+                // Create HTML for the message (either outgoing or incoming)
+                const messageHTMLContent = `
+                    <div class="chat ${isOutgoing ? 'outgoing' : 'incoming'}">
+                        <div class="details">
+                            <span>${new Date(message.timestamp).toLocaleString()}</span>
+                            <strong>${message.senderName}</strong>
+                            <div class="message-container" 
+                                onmouseover="this.querySelector('span').style.display='inline-block'" 
+                                onmouseout="this.querySelector('span').style.display='none'" 
+                                style="display: flex; align-items: center; padding: 10px; margin-bottom: 10px;">
+                                ${messageContentFinal}
+                                ${attachmentContentFinal}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                messageHTML += messageHTMLContent;
+            });
+
+            chatBox.innerHTML = messageHTML;
+
+            // Scroll to bottom if not actively scrolling up
+            if (!chatBox.classList.contains("active")) {
+                scrollToBottom();
+            }
+        } else {
+            console.error("Failed to fetch messages:", response.statusText);
+        }
+    } catch (error) {
+        console.error("Error fetching messages:", error);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+function toggleMenu(trigger,type) {
+    const menu = trigger.nextElementSibling;
+    // Close other menus if open
+    document.querySelectorAll('.menu').forEach((m) => {
+        if (m !== menu) m.style.display = 'none';
+		
+    });
+
+    // Toggle current menu
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+// Close menu if clicked outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.message-container')) {
+        document.querySelectorAll('.menu').forEach((menu) => {
+            menu.style.display = 'none';
+        });
+    }
+});
+
+async function deleteMessage(date, text) {
+  try {
+    // Send the request to the server
+    const response = await fetch('/ChatAPP/deleteMessage', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Set content type as JSON
+      },
+      body: JSON.stringify({ date, text }), // Pass the data in the body
+    });
+
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error(`Failed to delete message: ${response.statusText}`);
+    }
+
+    // Parse the server response
+    const result = await response.json();
+    console.log('Message deleted successfully:', result);
+
+    // Update the UI or notify the user
+    alert('Message deleted successfully!');
+  } catch (error) {
+    console.error('Error deleting message:', error);
+    alert('Failed to delete message. Please try again.');
+  }
+}
+
+// edit message
+function editMessage(timestamp, originalMessage) {
+    const messageElement = event.target.closest(".message-container").querySelector("p");
+
+    // Save the original message in case the user cancels
+    const oldMessage = messageElement.textContent;
+
+    // Create an input element
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = oldMessage;
+    input.style.flex = "1"; // Ensures it matches the original `p` element's layout
+    input.style.border = "1px solid #ccc";
+    input.style.padding = "5px";
+    input.style.margin = "0";
+
+    // Replace the <p> element with the input
+    messageElement.replaceWith(input);
+
+    // Flag to prevent multiple replacements
+    let isReplaced = false;
+
+    // Focus on the input field and move the cursor to the end
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
+
+    function saveMessage() {
+        // Prevent this logic from running multiple times
+        if (isReplaced) return;
+        isReplaced = true;
+
+        const newMessage = input.value.trim();
+
+        if (newMessage === "") {
+            alert("Message cannot be empty.");
+            input.focus();
+            isReplaced = false; // Allow retry
+            return;
+        }
+
+        // Replace the input back with a <p> tag
+        const updatedP = document.createElement("p");
+        updatedP.textContent = newMessage;
+        updatedP.style.margin = "0";
+        updatedP.style.paddingRight = "10px";
+        updatedP.style.flex = "1";
+
+        input.replaceWith(updatedP);
+
+        // Call the edit function using fetch
+        if (newMessage !== oldMessage) {
+            fetch('/ChatAPP/editMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    timestamp: timestamp,
+                    newMessage: newMessage,
+                }),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        console.log("Message updated successfully.");
+                    } else {
+                        console.error("Failed to update message.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error updating message:", error);
+                });
+        }
+    }
+
+    // Handle input blur or pressing Enter
+    input.addEventListener("blur", saveMessage);
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            saveMessage();
+        }
+    });
+}
+
+
+
+
+
+
 
 // Function to fetch group details
 async function fetchGroup() {

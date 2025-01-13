@@ -77,3 +77,81 @@
     display: block; /* Ensure it behaves like a block element in the chat bubble */
     background-color: #f0f0f0; /* Optional: Light background for a message bubble effect */
 }
+
+
+/* Menu button styles (Delete and Edit) */
+.menu div {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: black; /* Text color black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000; /* Black border */
+  background-color: white;
+  width: auto; /* Button size should match the text */
+  margin-top: 5px; /* Move the button slightly down */
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease, border 0.2s ease;
+}
+
+/* Hover effect for menu buttons */
+.menu div:hover {
+  background-color: #f8f8f8;
+  color: #007bff; /* Blue color on hover */
+  border-color: #007bff; /* Border color turns blue */
+}
+
+/* Delete button specific styling */
+.menu div:nth-child(1) {
+  color: #d9534f; /* Red color for delete */
+}
+
+/* Edit button specific styling */
+.menu div:nth-child(2) {
+  color: #f0ad4e; /* Orange color for edit */
+}
+
+/* Adjust icon or text alignment (if using icons) */
+.menu div i {
+  margin-right: 8px;
+}
+
+/* for scrolling 
+ */
+.chat-box {
+  overflow-y: scroll; /* Enable vertical scrolling */
+  border: 1px solid #ccc; /* Optional border for the box */
+  padding: 10px;
+  scrollbar-color: #888 #f1f1f1; /* Thumb and track colors for modern browsers */
+  scrollbar-width: thin; /* Reduce scrollbar width for modern browsers */
+}
+
+/* For modern browsers */
+.chat-box::-webkit-scrollbar {
+  width: 12px; /* Scrollbar width */
+}
+
+.chat-box::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track background color */
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background: #888; /* Thumb (scroll handle) color */
+  border-radius: 6px; /* Rounded thumb edges */
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Thumb color on hover */
+}
+
+.chat-box::-webkit-scrollbar-button:increment {
+  background-color: #ccc; /* Arrow button color */
+  height: 20px;
+}
+
+.chat-box::-webkit-scrollbar-button:decrement {
+  background-color: #ccc; /* Arrow button color */
+  height: 20px;
+}

@@ -39,32 +39,78 @@ public class GetChatServlet extends HttpServlet {
 					while(set.next()) {
 						
 						if (set.getString("outgoing_msg_id").equalsIgnoreCase(outgoing_id)) {  // If the user is the sender
-						    output += "<div class=\"chat outgoing\" onmouseover=\"showDots(this)\" onmouseout=\"hideDots(this)\">\n"
+						    output += "<div class=\"chat outgoing\">\n"
 						            + "  <div class=\"details\">\n";
 
 						    if (set.getString("msg") != null && !set.getString("msg").isBlank() && set.getString("imagePath") != null) {
 						        // If both message and image path exist
-						        output += "  <p>" + set.getString("msg") + "</p>\n"
-						                + "  <img src='" + req.getContextPath() + "/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
+						        output += "<div class=\"message-container\" onmouseover=\"this.querySelector('span').style.display='inline-block'\" "
+						                + "onmouseout=\"this.querySelector('span').style.display='none'\" "
+						                + "style=\"display: flex; align-items: center; padding: 10px; margin-bottom: 10px;\">\n"
+						                + "  <p style=\"margin: 0; padding-right: 10px; flex: 1; border: none;\">" 
+						                + set.getString("msg") 
+						                + "</p>\n"
+						                + "  <span class=\"menu-trigger\" onclick=\"toggleMenu(this, 'text')\" style=\"display: none; cursor: pointer; font-size: 18px; color: #007bff;\">...</span>\n"
+						                + "    <div class=\"menu\" style=\"display: none;\">\n"
+						                + "        <div onclick=\"deleteMessage('" + set.getTimestamp("time") + "', '" + set.getString("msg") + "')\">Delete</div>\n"  // EDIT: Fixed string concatenation for deleteMessage
+						                + "        <div onclick=\"editMessage('" + set.getTimestamp("time") + "', '" + set.getString("msg") + "')\">Edit</div>\n"
+						                + "    </div>\n"
+						                + "</div>\n"
+						                + "<div class=\"message-container\" onmouseover=\"this.querySelector('span').style.display='inline-block'\" "
+						                + "onmouseout=\"this.querySelector('span').style.display='none'\" "
+						                + "style=\"display: flex; align-items: center; padding: 10px; margin-bottom: 10px;\">\n" 
+						                + "  <img src='" + req.getContextPath() + "/uploads/" + set.getString("imagePath") + "' alt='Image' " 
+						                + "style=\"width: 50px; height: 50px; object-fit: cover; margin-right: 2px;\">\n"  // Smaller gap (margin-right: 2px)
+						                + "  <span class=\"menu-trigger\" onclick=\"toggleMenu(this, 'image')\" " 
+						                + "style=\"display: none; cursor: pointer; font-size: 18px; color: #007bff;\">\n" 
+						                + "    ...\n" 
+						                + "  </span>\n" 
+						                + "    <div class=\"menu\" style=\"display: none;\">\n"
+						                + "        <div onclick=\"deleteMessage('" + set.getTimestamp("time") + "', '" + set.getString("imagePath") + "')\">Delete</div>\n"  // EDIT: Fixed string concatenation for deleteMessage
+						                + "    </div>\n"
+						                + "</div>\n";
+
 						    } else if (set.getString("msg") != null && !set.getString("msg").isBlank()) {
 						        // If only the message exists
-						        output += "  <p>" + set.getString("msg") + "</p>\n";
+						        output += "<div class=\"message-container\" onmouseover=\"this.querySelector('span').style.display='inline-block'\" "
+						                + "onmouseout=\"this.querySelector('span').style.display='none'\" "
+						                + "style=\"display: flex; align-items: center; padding: 10px; margin-bottom: 10px;\">\n"
+						                + "  <p style=\"margin: 0; padding-right: 10px; flex: 1; border: none;\">" 
+						                + set.getString("msg") 
+						                + "</p>\n"
+						                + "  <span class=\"menu-trigger\" onclick=\"toggleMenu(this, 'text')\" style=\"display: none; cursor: pointer; font-size: 18px; color: #007bff;\">...</span>\n"
+						                + "    <div class=\"menu\" style=\"display: none;\">\n"
+						                + "        <div onclick=\"deleteMessage('" + set.getTimestamp("time") + "', '" + set.getString("msg") + "')\">Delete</div>\n"  // EDIT: Fixed string concatenation for deleteMessage
+						                + "        <div onclick=\"editMessage('" + set.getTimestamp("time") + "', '" + set.getString("msg") + "')\">Edit</div>\n"
+						                + "    </div>\n"
+						                + "</div>";
+
 						    } else if (set.getString("imagePath") != null) {
 						        // If only the image exists
-						        output += "  <img src='" + req.getContextPath() + "/uploads/" + set.getString("imagePath") + "' alt='Image'/>\n";
+						        output += "<div class=\"message-container\" onmouseover=\"this.querySelector('span').style.display='inline-block'\" "
+						                + "onmouseout=\"this.querySelector('span').style.display='none'\" "
+						                + "style=\"display: flex; align-items: center; padding: 10px; margin-bottom: 10px;\">\n" 
+						                + "  <img src='" + req.getContextPath() + "/uploads/" + set.getString("imagePath") + "' alt='Image' " 
+						                + "style=\"width: 50px; height: 50px; object-fit: cover; margin-right: 2px;\">\n"  // Smaller gap (margin-right: 2px)
+						                + "  <span class=\"menu-trigger\" onclick=\"toggleMenu(this, 'image')\" " 
+						                + "style=\"display: none; cursor: pointer; font-size: 18px; color: #007bff;\">\n" 
+						                + "    ...\n" 
+						                + "  </span>\n" 
+						                + "    <div class=\"menu\" style=\"display: none;\">\n"
+						                + "        <div onclick=\"deleteMessage('" + set.getTimestamp("time") + "', '" + set.getString("imagePath") + "')\">Delete</div>\n"  // EDIT: Fixed string concatenation for deleteMessage
+						                + "    </div>\n"
+						                + "</div>\n";
 						    }
-
-						    // Add three dots menu
-						    output += "  <div class=\"dots-menu\" style=\"display: none;\" onclick=\"toggleMenu(this)\">...</div>\n"
-						            + "  <div class=\"menu-options\" style=\"display: none;\">\n"
-						            + "    <button onclick=\"editMessage(this)\">Edit</button>\n"
-						            + "    <button onclick=\"deleteMessage(this)\">Delete</button>\n"
-						            + "  </div>\n";
 
 						    output += "  </div>\n"
 						            + "</div>";
+						}
 
-						} else { // If the user is the receiver
+
+
+ 
+					    
+					    else { // If the user is the receiver
 						    output += "<div class=\"chat incoming\">\n"
 						            + "  <div class=\"details\">\n";
 

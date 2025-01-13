@@ -49,7 +49,7 @@ public class GetMessage extends HttpServlet {
                 information.put("senderName", rs.getString("fname") + " " + rs.getString("lname"));
                 
                 information.put("messageText", rs.getString("message_text"));
-                information.put("timestamp", rs.getString("timestamp"));
+                information.put("timestamp", rs.getTimestamp("timestamp").toString());
                 information.put("attachmentPath", rs.getString("attachment_path"));
                 detail.add(information);
             }

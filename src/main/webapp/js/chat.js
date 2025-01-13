@@ -1,5 +1,4 @@
-/*
-/
+
 // Ensure the script runs after the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector(".typing-area"),
@@ -36,17 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Add event listener for button click
-    sendBtn.addEventListener("click", (event) => {
-		event.preventDefault();//prevent from default submission
-        submitForm(); // Call the submitForm function when the button is clicked
-    });
-
-    // Update the chat box every 700ms
 	
 	sendGetRequest();
 	
-    //const intervalId = setInterval(sendGetRequest, 700);
+   // const intervalId = setInterval(sendGetRequest, 700);
 
     // Handle scrolling to bottom of the chat box
     chatBox.onmouseenter = () => {
@@ -152,160 +144,141 @@ function sendGetRequest() {
         console.error('Error:', error);
     });
 }
-*/
 
 
-
-// Ensure the script runs after the DOM is fully loaded
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector(".typing-area"),
-        inputField = form ? form.querySelector(".input-field") : null,
-        sendBtn = form ? form.querySelector("button") : null,
-        chatBox = document.querySelector(".chat-box");
-
-    // Log the elements to check if they are correctly selected
-    console.log("Form:", form);
-    console.log("Input Field:", inputField);
-    console.log("Send Button:", sendBtn);
-    console.log("Chat Box:", chatBox);
-
-    // Ensure elements are not null before proceeding
-    if (!form || !inputField || !sendBtn || !chatBox) {
-        console.error("One or more elements could not be found. Please check the selectors or ensure the DOM is fully loaded.");
-        return;
-    }
-
-    // Get the outgoing and incoming IDs
-    let out_id = document.getElementById("outgoing_id").value;
-    let in_id = document.getElementById("incoming_id").value;
-
-    // Prevent the default form submission
-    form.onsubmit = (e) => {
-        e.preventDefault();
-    };
-
-    // Add event listener to handle 'Enter' key submission
-    inputField.addEventListener('keydown', function(event){
-        if (event.key === 'Enter' || event.keyCode === 13) {
-            event.preventDefault();
-            submitForm(); // Call the submitForm function when 'Enter' is pressed
-        }
+function toggleMenu(trigger,type) {
+    const menu = trigger.nextElementSibling;
+    // Close other menus if open
+    document.querySelectorAll('.menu').forEach((m) => {
+        if (m !== menu) m.style.display = 'none';
+		
     });
 
-    // Update the chat box every 700ms
-    sendGetRequest();
+    // Toggle current menu
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
 
-    // Handle scrolling to bottom of the chat box
-    chatBox.onmouseenter = () => {
-        chatBox.classList.add("active");
-    };
-
-    chatBox.onmouseleave = () => {
-        chatBox.classList.remove("active");
-    };
-
-    // ** Added: Event delegation for three dots menu **
-    chatBox.addEventListener("click", (event) => {
-        const target = event.target;
-
-        // If the three dots are clicked
-        if (target.classList.contains("dots-menu")) {
-            toggleMenu(target);
-        }
-
-        // If delete option is clicked
-        if (target.classList.contains("delete-message")) {
-            const messageId = target.dataset.id; // Get the message ID
-            deleteMessage(messageId); // Call deleteMessage function
-        }
-
-        // If edit option is clicked
-        if (target.classList.contains("edit-message")) {
-            const messageId = target.dataset.id; // Get the message ID
-            editMessage(messageId); // Call editMessage function
-        }
-    });
-
-    // Define the function to scroll to the bottom of the chat box
-    function scrollToBottom() {
-        chatBox.scrollTop = chatBox.scrollHeight;
+// Close menu if clicked outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.message-container')) {
+        document.querySelectorAll('.menu').forEach((menu) => {
+            menu.style.display = 'none';
+        });
     }
 });
 
-// ** Added: Function to toggle the menu visibility **
-function toggleMenu(menuElement) {
-    const menuOptions = menuElement.nextElementSibling;
-    if (menuOptions) {
-        menuOptions.classList.toggle("active"); // Show/hide the menu
-    }
-}
+async function deleteMessage(date, text) {
+  try {
+    // Send the request to the server
+    const response = await fetch('/ChatAPP/deleteMessage', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Set content type as JSON
+      },
+      body: JSON.stringify({ date, text }), // Pass the data in the body
+    });
 
-// ** Added: Function to delete a message **
-function deleteMessage(messageId) {
-    if (!messageId) return;
-
-    const url = `deleteMessage?id=${encodeURIComponent(messageId)}`; // API endpoint for deleting the message
-    fetch(url, { method: "DELETE" })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Failed to delete message");
-            }
-            sendGetRequest(); // Refresh the chat box after deletion
-        })
-        .catch(error => console.error("Error deleting message:", error));
-}
-
-// ** Added: Function to edit a message **
-function editMessage(messageId) {
-    if (!messageId) return;
-
-    const newMessage = prompt("Edit your message:"); // Prompt the user to enter the new message
-    if (newMessage === null || newMessage.trim() === "") {
-        console.warn("Message edit canceled or invalid input.");
-        return;
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error(`Failed to delete message: ${response.statusText}`);
     }
 
-    const url = `editMessage?id=${encodeURIComponent(messageId)}`;
-    const formData = new FormData();
-    formData.append("message", newMessage);
+    // Parse the server response
+    const result = await response.json();
+    console.log('Message deleted successfully:', result);
 
-    fetch(url, { method: "POST", body: formData })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Failed to edit message");
-            }
-            sendGetRequest(); // Refresh the chat box after editing
-        })
-        .catch(error => console.error("Error editing message:", error));
+    // Update the UI or notify the user
+    alert('Message deleted successfully!');
+  } catch (error) {
+    console.error('Error deleting message:', error);
+    alert('Failed to delete message. Please try again.');
+  }
 }
 
-// Define scrollToBottom function globally if needed
-function scrollToBottom() {
-    const chatBox = document.querySelector(".chat-box");
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
+// edit message
+function editMessage(timestamp, originalMessage) {
+    const messageElement = event.target.closest(".message-container").querySelector("p");
 
-// Define sendGetRequest function to fetch messages periodically
-function sendGetRequest() {
-    let out_id = document.getElementById("outgoing_id").value;
-    let in_id = document.getElementById("incoming_id").value;
-    const servletURL = `get_chat?outgoing_id=${encodeURIComponent(out_id)}&incoming_id=${encodeURIComponent(in_id)}`;
+    // Save the original message in case the user cancels
+    const oldMessage = messageElement.textContent;
 
-    fetch(servletURL, {
-        method: 'GET',
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+    // Create an input element
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = oldMessage;
+    input.style.flex = "1"; // Ensures it matches the original `p` element's layout
+    input.style.border = "1px solid #ccc";
+    input.style.padding = "5px";
+    input.style.margin = "0";
+
+    // Replace the <p> element with the input
+    messageElement.replaceWith(input);
+
+    // Flag to prevent multiple replacements
+    let isReplaced = false;
+
+    // Focus on the input field and move the cursor to the end
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
+
+    function saveMessage() {
+        // Prevent this logic from running multiple times
+        if (isReplaced) return;
+        isReplaced = true;
+
+        const newMessage = input.value.trim();
+
+        if (newMessage === "") {
+            alert("Message cannot be empty.");
+            input.focus();
+            isReplaced = false; // Allow retry
+            return;
         }
-        return response.text();
-    }).then(data => {
-        const chatBox = document.querySelector(".chat-box");
-        chatBox.innerHTML = data;
-        console.log(data);
-        if (!chatBox.classList.contains("active")) {
-            scrollToBottom();
+
+        // Replace the input back with a <p> tag
+        const updatedP = document.createElement("p");
+        updatedP.textContent = newMessage;
+        updatedP.style.margin = "0";
+        updatedP.style.paddingRight = "10px";
+        updatedP.style.flex = "1";
+
+        input.replaceWith(updatedP);
+
+        // Call the edit function using fetch
+        if (newMessage !== oldMessage) {
+            fetch('/ChatAPP/editMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    timestamp: timestamp,
+                    newMessage: newMessage,
+                }),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        console.log("Message updated successfully.");
+                    } else {
+                        console.error("Failed to update message.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error updating message:", error);
+                });
         }
-    }).catch(error => {
-        console.error('Error:', error);
+    }
+
+    // Handle input blur or pressing Enter
+    input.addEventListener("blur", saveMessage);
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            saveMessage();
+        }
     });
 }
+
+
+
+
+

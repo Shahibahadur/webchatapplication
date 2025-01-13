@@ -112,4 +112,34 @@
     <servlet-name>ProceesRequestServlet</servlet-name>
     <url-pattern>/ProceesRequestServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteMessage</display-name>
+    <servlet-name>DeleteMessage</servlet-name>
+    <servlet-class>messageprocessing.DeleteMessage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteMessage</servlet-name>
+    <url-pattern>/DeleteMessage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditMessage</display-name>
+    <servlet-name>EditMessage</servlet-name>
+    <servlet-class>messageprocessing.EditMessage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditMessage</servlet-name>
+    <url-pattern>/EditMessage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GroupDeleteMessage</display-name>
+    <servlet-name>GroupDeleteMessage</servlet-name>
+    <servlet-class>messageprocessing.GroupDeleteMessage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GroupDeleteMessage</servlet-name>
+    <url-pattern>/GroupDeleteMessage</url-pattern>
+  </servlet-mapping>
 </web-app>
