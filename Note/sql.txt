@@ -25,3 +25,20 @@ SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLU
 REFERENCED_TABLE_NAME = 'groups' AND REFERENCED_COLUMN_NAME = 'group_id'AND TABLE_SCHEMA = 'chat';
 
  alter table admin convert to character set utf8mb4 collate utf8mb4_general_ci;
+ 
+ message_id      | int          | NULL               | NO   | PRI | NULL              | auto_increment    | select,insert,update,references |         |
+| group_id        | int          | NULL               | NO   | MUL | NULL              |                   | select,insert,update,references |         |
+| sender_id       | varchar(200) | utf8mb4_general_ci | NO   | MUL | NULL              |                   | select,insert,update,references |         |
+| message_text    | varchar(500) | utf8mb4_general_ci | YES  |     | NULL              |                   | select,insert,update,references |         |
+| timestamp       | datetime     | NULL               | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED | select,insert,update,references |         |
+| attachment_path | varchar(500) | utf8mb4_general_ci | YES  |     | NULL              |                   | select,insert,update,references |
+
+
+
+ unique_id   | varchar(36)                 | utf8mb4_general_ci | NO   | PRI | NULL              |                   | select,insert,update,references |         |
+| admin_name  | varchar(100)                | utf8mb4_general_ci | NO   |     | NULL              |                   | select,insert,update,references |         |
+| email       | varchar(100)                | utf8mb4_general_ci | NO   | UNI | NULL              |                   | select,insert,update,references |         |
+| password    | varchar(255)                | utf8mb4_general_ci | NO   |     | NULL              |                   | select,insert,update,references |         |
+| status      | enum('active','inactive')   | utf8mb4_general_ci | YES  |     | inactive          |                   | select,insert,update,references |         |
+| role        | enum('super admin','admin') | utf8mb4_general_ci | YES  |     | admin             |                   | select,insert,update,references |         |
+| as_admin_at | timestamp                   | NULL               | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED | select,insert,update,references |

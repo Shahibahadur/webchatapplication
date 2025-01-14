@@ -1,5 +1,7 @@
 
 // Ensure the script runs after the DOM is fully loaded
+let messageInterval;
+
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector(".typing-area"),
         inputField = form ? form.querySelector(".input-field") : null,
@@ -38,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 	sendGetRequest();
 	
-   // const intervalId = setInterval(sendGetRequest, 700);
+    messageInterval = setInterval(sendGetRequest, 700);
 
     // Handle scrolling to bottom of the chat box
     chatBox.onmouseenter = () => {
@@ -107,6 +109,7 @@ function submitForm() {
             document.getElementById("message").value = ""; // Clear the input field
 			document.getElementById("image-upload").value="";
             scrollToBottom(); // Scroll to the bottom of the chat box
+			sendGetRequest()
         } else if (xhr.readyState === 4) {
             console.error("Error in message submission:", xhr.status, xhr.statusText);
         }
@@ -149,6 +152,9 @@ function sendGetRequest() {
 function toggleMenu(trigger,type) {
     const menu = trigger.nextElementSibling;
     // Close other menus if open
+	
+	clearInterval(messageInterval);
+
     document.querySelectorAll('.menu').forEach((m) => {
         if (m !== menu) m.style.display = 'none';
 		
@@ -156,6 +162,11 @@ function toggleMenu(trigger,type) {
 
     // Toggle current menu
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+	
+	// Restart the interval when the menu is closed
+	    if (menu.style.display === 'none') {
+	        messageInterval = setInterval(sendGetRequest, 700);
+	    }
 }
 
 // Close menu if clicked outside
@@ -164,6 +175,10 @@ document.addEventListener('click', (e) => {
         document.querySelectorAll('.menu').forEach((menu) => {
             menu.style.display = 'none';
         });
+		
+		if (!messageInterval) {
+		           messageInterval = setInterval(sendGetRequest, 700);
+		       }
     }
 });
 
@@ -189,6 +204,9 @@ async function deleteMessage(date, text) {
 
     // Update the UI or notify the user
     alert('Message deleted successfully!');
+	
+	sendGetRequest(); // Refresh chat box after deletion
+
   } catch (error) {
     console.error('Error deleting message:', error);
     alert('Failed to delete message. Please try again.');
@@ -259,6 +277,8 @@ function editMessage(timestamp, originalMessage) {
                 .then((response) => {
                     if (response.ok) {
                         console.log("Message updated successfully.");
+						sendGetRequest(); // Refresh chat box after editing
+
                     } else {
                         console.error("Failed to update message.");
                     }

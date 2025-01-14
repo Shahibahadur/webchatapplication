@@ -166,6 +166,8 @@ async function fetchMessages() {
 function toggleMenu(trigger,type) {
     const menu = trigger.nextElementSibling;
     // Close other menus if open
+	clearInterval(messageInterval);
+
     document.querySelectorAll('.menu').forEach((m) => {
         if (m !== menu) m.style.display = 'none';
 		
@@ -173,6 +175,11 @@ function toggleMenu(trigger,type) {
 
     // Toggle current menu
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+	
+	// Restart the interval when the menu is closed
+		    if (menu.style.display === 'none') {
+		        messageInterval = setInterval(fetchMessages, 700);
+		    }
 }
 
 // Close menu if clicked outside
@@ -181,6 +188,10 @@ document.addEventListener('click', (e) => {
         document.querySelectorAll('.menu').forEach((menu) => {
             menu.style.display = 'none';
         });
+		
+		if (!messageInterval) {
+				           messageInterval = setInterval(fetchMessages, 700);
+				       }
     }
 });
 
@@ -206,6 +217,7 @@ async function deleteMessage(date, text) {
 
     // Update the UI or notify the user
     alert('Message deleted successfully!');
+	fetchMessages();
   } catch (error) {
     console.error('Error deleting message:', error);
     alert('Failed to delete message. Please try again.');
@@ -276,6 +288,7 @@ function editMessage(timestamp, originalMessage) {
                 .then((response) => {
                     if (response.ok) {
                         console.log("Message updated successfully.");
+						fetchMessages();
                     } else {
                         console.error("Failed to update message.");
                     }
@@ -387,6 +400,8 @@ function scrollToBottom() {
 }
 
 // Initialize the page
+
+let messageInterval;
 document.addEventListener("DOMContentLoaded", () => {
     const FORM = document.querySelector(".typing-area");
     const INPUTFIELD = FORM ? FORM.querySelector(".input-field") : null;
@@ -412,7 +427,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchGroup();
 	fetchMessages();
 	
-   // setInterval(fetchMessages, 700);
+   messageInterval = setInterval(fetchMessages, 700);
 
     CHATBOX.onmouseenter = () => {
         CHATBOX.classList.add("active");
