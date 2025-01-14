@@ -142,4 +142,14 @@
     <servlet-name>GroupDeleteMessage</servlet-name>
     <url-pattern>/GroupDeleteMessage</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditGroupMessage</display-name>
+    <servlet-name>EditGroupMessage</servlet-name>
+    <servlet-class>messageprocessing.EditGroupMessage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditGroupMessage</servlet-name>
+    <url-pattern>/EditGroupMessage</url-pattern>
+  </servlet-mapping>
 </web-app>
