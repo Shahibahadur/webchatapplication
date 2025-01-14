@@ -198,7 +198,7 @@ document.addEventListener('click', (e) => {
 async function deleteMessage(date, text) {
   try {
     // Send the request to the server
-    const response = await fetch('/ChatAPP/deleteMessage', {
+    const response = await fetch('/ChatAPP/deleteGroupMessage', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', // Set content type as JSON
@@ -275,7 +275,7 @@ function editMessage(timestamp, originalMessage) {
 
         // Call the edit function using fetch
         if (newMessage !== oldMessage) {
-            fetch('/ChatAPP/editMessage', {
+            fetch('/ChatAPP/editGroupMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
