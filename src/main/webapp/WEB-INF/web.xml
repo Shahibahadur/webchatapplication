@@ -152,4 +152,24 @@
     <servlet-name>EditGroupMessage</servlet-name>
     <url-pattern>/EditGroupMessage</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ShowAdmins</display-name>
+    <servlet-name>ShowAdmins</servlet-name>
+    <servlet-class>admin.ShowAdmins</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowAdmins</servlet-name>
+    <url-pattern>/ShowAdmins</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ShowLogInAdmin</display-name>
+    <servlet-name>ShowLogInAdmin</servlet-name>
+    <servlet-class>admin.ShowLogInAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowLogInAdmin</servlet-name>
+    <url-pattern>/ShowLogInAdmin</url-pattern>
+  </servlet-mapping>
 </web-app>

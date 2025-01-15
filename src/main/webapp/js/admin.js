@@ -1,30 +1,57 @@
-// Dummy data for logged-in admin user
-const loggedInUser = {
-    name: "Admin John",
-    role: "Administrator",
-};
+let loggedInAdmin; // Declare the global variable for logged-in admin
 
-// Dummy data for admins with active/inactive status
-const admins = [
-    { id: 1, name: "Admin John", status: "Active" },
-    { id: 2, name: "Admin Jane", status: "Inactive" },
-    { id: 3, name: "Admin Mike", status: "Active" },
-];
+async function logInAdmin() {
+    try {
+        const response = await fetch('/ChatAPP/showLogInAdmin'); // Fetch without headers
+
+        if (!response.ok) {
+            throw new Error(`Failed to load the data: ${response.status}`);
+        }
+
+        loggedInAdmin = await response.json();
+        console.log("Logged-in admin details:", loggedInAdmin);
+    } catch (error) {
+        console.error("Error in loading data:", error);
+    }
+}
 
 
 // Function to render admin table
-function renderAdmins() {
+async function renderAdmins() {
     const adminTableBody = document.getElementById("adminTableBody");
-    adminTableBody.innerHTML = "";
+    adminTableBody.innerHTML = ""; // Clear the table body
+    
+    let admins;
+    try {
+        const response = await fetch('/ChatAPP/showAdmin');
+        if (!response.ok) {
+            throw new Error("Failed to fetch the admin details");
+        }
+        admins = await response.json();
+    } catch (error) {
+        console.error("Error in loading data:", error);
+        adminTableBody.innerHTML = `<tr><td colspan="3">Failed to load admin details. Please try again later.</td></tr>`;
+        return;
+    }
+    
+    if (!admins || admins.length === 0) {
+        console.warn("No admin is available to display.");
+        adminTableBody.innerHTML = `<tr><td colspan="3">No admins found.</td></tr>`;
+        return;
+    }
+    
+    // Build table rows
+    let rows = "";
     admins.forEach(admin => {
-        const row = `<tr>
+        rows += `<tr>
             <td>${admin.id}</td>
             <td>${admin.name}</td>
             <td>${admin.status}</td>
         </tr>`;
-        adminTableBody.innerHTML += row;
     });
+    adminTableBody.innerHTML = rows; // Update the table body once
 }
+
 
 
 
@@ -219,9 +246,15 @@ function showSection(sectionId) {
 
 
 // Initialize page
-document.addEventListener("DOMContentLoaded", () => {
-    // Set logged-in user name
-    document.getElementById("loggedInUser").textContent = `${loggedInUser.name} (${loggedInUser.role})`;
+document.addEventListener("DOMContentLoaded", async () => {
+	await logInAdmin();  // Fetch and update loggedInAdmin data
+
+	    if (loggedInAdmin) {
+	        // Set the logged-in user's name and role in the UI
+	        document.getElementById("loggedInUser").textContent = `${loggedInAdmin.name} (${loggedInAdmin.role})`;
+	    } else {
+	        document.getElementById("loggedInUser").textContent = "Logged-in user not found.";
+	    }
 
     // Default: Show admins section
     showSection("admins");

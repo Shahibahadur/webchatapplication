@@ -84,16 +84,22 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
         // Delete related records from other tables first
         try (PreparedStatement pstmt1 = conn.prepareStatement("DELETE FROM group_messages WHERE group_id = ?");
              PreparedStatement pstmt2 = conn.prepareStatement("DELETE FROM group_members WHERE group_id = ?");
-             PreparedStatement pstmt3 = conn.prepareStatement("DELETE FROM `groups` WHERE group_id = ?")) {
+        	 PreparedStatement pstmt3 = conn.prepareStatement("DELETE FROM group_join_requests WHERE group_id = ?");
+             PreparedStatement pstmt4 = conn.prepareStatement("DELETE FROM `groups` WHERE group_id = ?")) {
 
             pstmt1.setInt(1, groupId);
             pstmt1.executeUpdate();
 
             pstmt2.setInt(1, groupId);
             pstmt2.executeUpdate();
-
+            
             pstmt3.setInt(1, groupId);
-            int rowsAffected = pstmt3.executeUpdate();
+            pstmt3.executeUpdate();
+            
+
+            pstmt4.setInt(1, groupId);
+            int rowsAffected = pstmt4.executeUpdate();
+            
 
             if (rowsAffected > 0) {
                 conn.commit(); // Commit transaction
