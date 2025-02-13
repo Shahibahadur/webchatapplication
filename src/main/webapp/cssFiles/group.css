@@ -1,101 +1,68 @@
-@charset "UTF-8";
-/* General body styles */
+/* General Body Styles */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     color: #333;
+    line-height: 1.6;
+    text-align: center;
 }
 
-/* Header styles */
-h2, h3 {
-    color: #444;
-    margin-bottom: 15px;
-}
-
-/* Link to create group */
-a i.fas.fa-plus-circle {
-    font-size: 24px;
-    color: #007BFF;
-    text-decoration: none;
-    margin: 10px 0;
-}
-a i.fas.fa-plus-circle:hover {
-    color: #0056b3;
-}
-
-/* Search form */
-form {
+/* Image Container */
+#groupsContainer, 
+#joinedGroupsContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 0;
-}
-form input[type="text"] {
-    width: 300px;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
 }
-form button {
-    background-color: #007BFF;
-    border: none;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 5px;
+
+/* Uniform Image Styling */
+#groupsContainer img,
+#joinedGroupsContainer img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007bff;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
-form button:hover {
-    background-color: #0056b3;
+
+/* Hover Effect for Images */
+#groupsContainer img:hover,
+#joinedGroupsContainer img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    border-color: #0056b3;
 }
-form button i {
+
+/* Group Titles */
+#groupsContainer h3,
+#joinedGroupsContainer h3 {
+    margin-top: 10px;
     font-size: 16px;
+    color: #333;
 }
 
-/* Search results */
-div {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    background-color: #fff;
+/* Group Item Container */
+.group-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
-}
-div img {
-    margin-right: 15px;
-    border-radius: 5px;
-}
-div .searchGroup {
-    flex-grow: 1;
-}
-div .searchGroup h3 {
-    margin: 0;
+    text-align: center;
 }
 
-/* Join request button */
-form button[type="submit"] {
-    background-color: #28A745;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-form button[type="submit"]:hover {
-    background-color: #218838;
+/* Adjust Headers and Layout Spacing */
+h2 {
+    margin-bottom: 20px;
+    color: #444;
 }
 
-/* Joined groups */
-#groupsContainer, #requestsContainer {
+hr {
+    border: 1px solid #ddd;
     margin: 20px 0;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-#groupsContainer h3, #requestsContainer h3 {
-    margin: 5px 0;
 }

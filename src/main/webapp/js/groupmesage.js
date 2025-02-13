@@ -1,66 +1,3 @@
-/*// Function to fetch messages
-async function fetchMessages() {
-    const messageContainer = document.getElementById("messageContainer");
-    const groupId = messageContainer.dataset.groupId;
-    const senderId = messageContainer.dataset.sender;
-
-    if (!groupId
- || !senderId) {
-        console.error("Missing group ID or sender ID in messageContainer dataset.");
-        return;
-    }
-
-    try {
-        const response = await fetch(`/ChatAPP/GetMessage?groupId=${encodeURIComponent(groupId)}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-
-        if (response.ok) {
-            const messages = await response.json();
-            const chatBox = document.querySelector(".chat-box");
-            let messageHTML = "";
-
-            messages.forEach((message) => {
-                if (!message.messageText && !message.attachmentPath) {
-                    return; // Skip messages without text and attachments
-                }
-
-                const isOutgoing = senderId === message.senderId;
-                const messageContent = `
-                    ${message.messageText ? `<p>${message.messageText}</p>` : ""}
-                    ${message.attachmentPath ? `<img src="/ChatAPP/${message.attachmentPath}" alt="Sent image">` : ""}
-                `;
-
-                messageHTML += `
-                    <div class="chat ${isOutgoing ? "outgoing" : "incoming"}">
-                        <div class="details">
-                            <span>${new Date(message.timestamp).toLocaleString()}</span>
-                            <strong>${message.senderName}</strong>
-                            ${messageContent}
-                        </div>
-                    </div>
-                `;
-            });
-
-            chatBox.innerHTML = messageHTML;
-
-            // Scroll to bottom if not actively scrolling up
-            if (!chatBox.classList.contains("active")) {
-                scrollToBottom();
-            }
-        } else {
-            console.error("Failed to fetch messages:", response.statusText);
-        }
-    } catch (error) {
-        console.error("Error fetching messages:", error);
-    }
-}*/
-
-
-
 
 async function fetchMessages() {
     const messageContainer = document.getElementById("messageContainer");
@@ -98,21 +35,25 @@ async function fetchMessages() {
                 if (message.messageText) {
                     messageContent = `
                         <p style="margin: 0; padding-right: 10px; flex: 1; border: none;">${message.messageText}</p>
-                        <span class="menu-trigger" onclick="toggleMenu(this)" style="cursor: pointer; font-size: 18px; color: #007bff;">...</span>
+						${isOutgoing?
+                        `<span class="menu-trigger" onclick="toggleMenu(this)" style="cursor: pointer; font-size: 18px; color: #007bff;">...</span>
                         <div class="menu" style="display: none;">
                             <div onclick="deleteMessage('${message.timestamp}', '${message.messageText}')">Delete</div>
                             <div onclick="editMessage('${message.timestamp}', '${message.messageText}')">Edit</div>
-                        </div>
+                        </div>`
+						:''}
                     `;
                 }
 
                 if (message.attachmentPath) {
                     attachmentContent = `
                         <img src="/ChatAPP/${message.attachmentPath}" alt="Sent image" style="width: 50px; height: 50px; object-fit: cover; margin-right: 2px;">
-                        <span class="menu-trigger" onclick="toggleMenu(this)" style="cursor: pointer; font-size: 18px; color: #007bff;">...</span>
+						${isOutgoing ?
+                        `<span class="menu-trigger" onclick="toggleMenu(this)" style="cursor: pointer; font-size: 18px; color: #007bff;">...</span>
                         <div class="menu" style="display: none;">
                             <div onclick="deleteMessage('${message.timestamp}', '${message.attachmentPath}')">Delete</div>
-                        </div>
+                        </div>`
+						:''}
                     `;
                 }
 
@@ -124,7 +65,7 @@ async function fetchMessages() {
                 const messageHTMLContent = `
                     <div class="chat ${isOutgoing ? 'outgoing' : 'incoming'}">
                         <div class="details">
-                            <span>${new Date(message.timestamp).toLocaleString()}</span>
+                            <span>${formatTimestamp(message.timestamp)}</span>
                             <strong>${message.senderName}</strong>
                             <div class="message-container" 
                                 onmouseover="this.querySelector('span').style.display='inline-block'" 
@@ -155,7 +96,29 @@ async function fetchMessages() {
 }
 
 
+function formatTimestamp(timestamp) {
+    const messageDate = new Date(timestamp);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
 
+    const isSameDay = (date1, date2) =>
+        date1.getDate() === date2.getDate() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getFullYear() === date2.getFullYear();
+
+    if (isSameDay(messageDate, today)) {
+        return 'Today';
+    } else if (isSameDay(messageDate, yesterday)) {
+        return 'Yesterday';
+    } else {
+        return messageDate.toLocaleDateString([], {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+        });
+    }
+}
 
 
 
@@ -338,7 +301,7 @@ async function fetchGroup() {
             groupElement.innerHTML = `
               <a href="http://localhost:8080/ChatAPP/GroupDisplayServlet" class="back-icon"><i class="fas fa-arrow-left"></i></a>
 
-                <img src="/ChatAPP/groupImages${groupDetail.groupImage}" alt="Group Image">
+                <img src="/ChatAPP/groupImages/${groupDetail.groupImage}" alt="Group Image">
 				
                 <strong>${groupDetail.groupName}</strong>
             `;

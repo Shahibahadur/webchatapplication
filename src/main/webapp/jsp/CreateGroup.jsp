@@ -37,4 +37,16 @@
     <script type="text/javascript" src ="http://localhost:8080/ChatAPP/js/creategroup.js"></script>
     
 </body>
+
+	<script type = "text/javascript">
+	
+	window.addEventListener("pageshow", (event) => {
+	    if (event.persisted) {
+	        // The page is being loaded from the cache, so refresh it
+	        window.location.reload();
+	    }
+	});
+
+	
+	</script>
 </html>

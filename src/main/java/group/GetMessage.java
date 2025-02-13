@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import mypackage.DatabaseConfig;
 
 @WebServlet("/GetMessage")
@@ -25,7 +26,8 @@ public class GetMessage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-    	
+    	HttpSession session = request.getSession(false);
+    	String unique_id = session.getAttribute("unique_id").toString().trim();
     	
         String groupId = request.getParameter("groupId"); // Correctly fetch parameter from the request
 
@@ -45,7 +47,8 @@ public class GetMessage extends HttpServlet {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Map<String, String> information = new HashMap<>();
-                information.put("senderId", rs.getString("unique_id"));
+                information.put("unique_id",unique_id);
+                information.put("senderId", rs.getString("unique_id").trim());
                 information.put("senderName", rs.getString("fname") + " " + rs.getString("lname"));
                 
                 information.put("messageText", rs.getString("message_text"));

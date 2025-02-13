@@ -1,113 +1,121 @@
-@charset "UTF-8";
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
-    background: #f0f2f5;
-    color: #333;
-}
-
-.friend-requests-container {
-    width: 90%;
-    margin: 20px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.search-section {
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container for User Friends Section */
+.userFriends {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 90%;
+    max-width: 800px;
+}
+
+/* Search Section */
+.search-section {
     margin-bottom: 20px;
 }
 
-.search-section input {
-    width: 70%;
+.search-section form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-section input[type="text"] {
+    flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px 0 0 5px;
-    outline: none;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 16px;
 }
 
 .search-section button {
     padding: 10px 15px;
-    background: #007bff;
-    color: #fff;
+    background-color: #007bff;
+    color: #ffffff;
     border: none;
-    border-radius: 0 5px 5px 0;
+    border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .search-section button:hover {
-    background: #0056b3;
+    background-color: #0056b3;
 }
 
-.search-results, .friend-requests-received {
-    margin-top: 20px;
+/* Search Results Section */
+.search-results h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333333;
 }
 
 .friend-request-item {
     display: flex;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid #ccc;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fafafa;
+    transition: box-shadow 0.3s ease;
 }
 
+.friend-request-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile Picture */
 .friend-request-item img {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
+    object-fit: cover;
     margin-right: 15px;
+    border: 2px solid #6c757d;
 }
 
+/* Friend Info */
 .friend-info {
-    flex-grow: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .friend-info .name {
+    font-size: 18px;
     font-weight: bold;
-    margin: 0;
+    color: #343a40;
 }
 
 .friend-info .details {
-    margin: 5px 0 0;
     font-size: 14px;
-    color: #666;
+    color: #6c757d;
 }
 
-.actions button, .send-request {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.confirm {
-    background: #28a745;
-    color: #fff;
-}
-
-.delete {
-    background: #dc3545;
-    color: #fff;
-}
-
+/* Buttons */
 .send-request {
-    background: #007bff;
-    color: #fff;
-}
-
-.confirm:hover {
-    background: #218838;
-}
-
-.delete:hover {
-    background: #c82333;
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .send-request:hover {
-    background: #0056b3;
+    background-color: #218838;
 }

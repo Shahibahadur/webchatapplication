@@ -91,13 +91,16 @@
     	System.out.println(joinedGroups + "joined groups from group.jsp");
     
         if (joinedGroups != null && !joinedGroups.isEmpty()) {
+        	%>
+        	<div id="groupsContainer">
+        	<% 
             for (Map<String, String> group : joinedGroups) {
     %>
-      <a href="/ChatAPP/jsp/GroupChat.jsp?group_id=<%= group.get("group_id") %>">
-      <img src="<%= request.getContextPath() + "/groupImages/" + group.get("group_image") %>" alt="Group Image" width="100" height="100">
-      </a>
-    
-        <div>
+    <div class="group">
+      <img src="<%= request.getContextPath() + "/groupImages/" + group.get("group_image") %>" alt="Group Image"
+		onclick="window.location.href = '/ChatAPP/jsp/GroupChat.jsp?group_id=<%=group.get("group_id")%>'">
+      
+   
             <h3><%= group.get("group_name") %></h3>
         </div>
     <% 
@@ -108,14 +111,33 @@
     <% 
         } 
     %>
+    </div>
     
-    <hr/>
+    <!-- <hr/>
 
-    <!-- Display join requests -->
+    Display join requests
     <div id="requestsContainer">
-	<!-- dynamically show the list of join request to the group created by the users -->
-	</div>		
+	dynamically show the list of join request to the group created by the users
+	</div>	 -->	
 
         <script src="http://localhost:8080/ChatAPP/js/srj.js"></script>    
 </body>
+
+	<script type = "text/javascript">
+	
+	window.addEventListener("pageshow", (event) => {
+	    if (event.persisted) {
+	        // The page is being loaded from the cache, so refresh it
+	        window.location.reload();
+	    }
+	});
+
+	
+	</script>
 </html>
+
+
+
+
+
+

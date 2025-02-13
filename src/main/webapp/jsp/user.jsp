@@ -62,7 +62,6 @@
 		<section class ="users">
 			<header>
 				<div class="content">
-				<!-- <a href = "javascript:void(0);" onclick ="profile()"  > -->
 				<a href = "http://localhost:8080/ChatAPP/profile" >
 					<img alt="" src='<%String imgPath = "uploads/" + imgName; out.print(imgPath); 
 					//testing
@@ -111,6 +110,18 @@
 		</section>
 	
 	</div>
+	
+	<script type = "text/javascript">
+	
+	window.addEventListener("pageshow", (event) => {
+	    if (event.persisted) {
+	        // The page is being loaded from the cache, so refresh it
+	        window.location.reload();
+	    }
+	});
+
+	
+	</script>
 	  
 	<script type="text/javascript" src="http://localhost:8080/ChatAPP/js/users.js"></script>
 </body>

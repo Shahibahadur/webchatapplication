@@ -80,6 +80,18 @@
             <div class="link">Already signed up? <a href="<%=request.getContextPath()%>/user-login">Login now</a></div>
         </section>
     </div>
+    
+    	<script type = "text/javascript">
+	
+	window.addEventListener("pageshow", (event) => {
+	    if (event.persisted) {
+	        // The page is being loaded from the cache, so refresh it
+	        window.location.reload();
+	    }
+	});
+
+	
+	</script>
     <script src = "http://localhost:8080/ChatAPP/js/index.js"></script>
     <script src="http://localhost:8080/ChatAPP/js/pass_show_hode.js"></script>
     
