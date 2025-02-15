@@ -17,10 +17,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import mypackage.DatabaseConfig;
+import com.google.gson.Gson;
 
-
-//display the groups in which user is joined 
-
+// Display the groups in which user is joined
 @WebServlet("/GroupDisplayServlet")
 public class GroupDisplayServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -30,14 +29,13 @@ public class GroupDisplayServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("unique_id");
-        
-        System.out.println(userId + "session from GroupDisplayServlet");
 
-	
-		/*
-		 * if (userId == null) { response.sendRedirect("jsp/login.jsp"); return; }
-		 */
-		 
+        System.out.println(userId + " session from GroupDisplayServlet");
+
+        if (userId == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in");
+            return;
+        }
 
         List<Map<String, String>> joinedGroups = new ArrayList<>();
 
@@ -46,18 +44,19 @@ public class GroupDisplayServlet extends HttpServlet {
                 SELECT g.group_id, g.image, g.group_name, gm.joined_at
                 FROM `groups` g
                 JOIN group_members gm ON g.group_id = gm.group_id
-                WHERE gm.user_id = ? AND gm.status = 'approved' and admin_id !=?
+                WHERE gm.user_id = ? AND gm.status = 'approved' AND g.admin_id != ?
             """;
             try (PreparedStatement joinedGroupsStmt = connection.prepareStatement(joinedGroupsSql)) {
                 joinedGroupsStmt.setString(1, userId);
-                joinedGroupsStmt.setString(2,userId);
+                joinedGroupsStmt.setString(2, userId);
                 ResultSet joinedGroupsRs = joinedGroupsStmt.executeQuery();
 
                 while (joinedGroupsRs.next()) {
                     Map<String, String> group = new HashMap<>();
                     group.put("group_id", joinedGroupsRs.getString("group_id"));
                     group.put("group_name", joinedGroupsRs.getString("group_name"));
-                    group.put("group_image",joinedGroupsRs.getString("image"));
+                    group.put("group_image", joinedGroupsRs.getString("image"));
+
                     Timestamp joinedAt = joinedGroupsRs.getTimestamp("joined_at");
                     if (joinedAt != null) {
                         String formattedTimestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(joinedAt);
@@ -70,11 +69,15 @@ public class GroupDisplayServlet extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().println("Error: " + e.getMessage());
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(new Gson().toJson(Map.of("error", e.getMessage())));
             return;
         }
 
-        request.setAttribute("joinedGroups", joinedGroups);
-        request.getRequestDispatcher("jsp/group.jsp").forward(request, response);
+        // Convert joinedGroups to JSON and send it as a response
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(new Gson().toJson(joinedGroups));
     }
 }

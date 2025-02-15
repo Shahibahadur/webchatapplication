@@ -82,7 +82,7 @@
 		            </a>
 		
 		            <!-- Groups Icon -->
-		            <a href="http://localhost:8080/ChatAPP/GroupDisplayServlet" title="Groups">
+		            <a href="http://localhost:8080/ChatAPP/jsp/group.jsp" title="Groups">
 		                <i class="fas fa-users"></i>
 		            </a>
 					

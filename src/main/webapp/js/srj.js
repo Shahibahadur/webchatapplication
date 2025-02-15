@@ -1,15 +1,23 @@
 document.addEventListener("DOMContentLoaded", async () => {
     // Containers for displaying data
-    const groupsContainer = document.getElementById("groupsContainer");
+    const createdContainer = document.getElementById("createdContainer");
     const requestsContainer = document.getElementById("requestsContainer");
+	const joinedContainer = document.getElementById("joinedContainer");
 
     try {
         // Fetch groups and join requests sequentially
-        const groups = await fetchGroups();
-        const requests = await fetchJoinRequests();
+      const [groups, joinedGroups, requests] = await Promise.all([
+		fetchGroups(),
+		fetchJoinedGroups(),
+		fetchJoinRequests()
+	  ]);
+		
 
-        // Display the fetched data
+        // Display groups
         displayGroups(groups);
+		displayJoinedGroups(joinedGroups);
+		
+		//dispaly group join request
         displayRequests(requests);
     } catch (error) {
         console.error("Error loading data:", error);
@@ -42,14 +50,81 @@ document.addEventListener("DOMContentLoaded", async () => {
             throw error;
         }
     }
+	
+	
+	// reterive the joined groups
+	
+	
+	async function fetchJoinedGroups(){
+		try{
+			const response = await fetch("http://localhost:8080/ChatAPP/GroupDisplayServlet");
+			if(!response.ok){
+				throw new Error ("Failed to fetch joined groups");
+				
+			}
+			return await response.json();
+			
+			
+			
+		}catch(error){
+			console.erro("Error from fetchJoingroup():", error);
+			throw error;
+			
+		}
+	}
+	
+	
+	//function to display joined Groups
+	function displayJoinedGroups(joinedGroups){
+		joinedContainer.innerHTML = "";
+		if(joinedGroups.length>0){
+			joinedGroups.forEach(group=>{
+				const groupDiv = document.createElement('div');
+				groupDiv.className = "group-item";
+				
+				const img = document.createElement('img');
+				img.src = `/ChatAPP/groupImages/${group.group_image}`;
+				img.alt = "Group Image";
+				groupDiv.appendChild(img);
+				
+				const groupName = document.createElement("h3");
+				groupName. textContent = group.group_name;
+				groupDiv.appendChild(groupName);
+				
+				groupDiv.addEventListener("click", ()=>{
+					//window.location.href = `/ChatAPP/jsp/GroupChat.jsp?group_id=${group.group_id}`;
+					
+					let chatGroup = document.getElementById('group');
+					let messageContainer=document.getElementById("messageContainer");
+					let inputHidden = document.getElementById("message");
+					
+					
+					chatGroup.setAttribute("data-group-id", group.group_id)
+					messageContainer.setAttribute("data-group-id", group.group_id);
+					inputHidden.setAttribute("value",group_id);
+					
+					chatGroup.innerHTML = `
 
+					               <img src="/ChatAPP/groupImages/${groupDetail.groupImage}" alt="Group Image">
+								
+					               <strong>${groupDetail.groupName}</strong>
+					           `;
+				});
+				joinedContainer.appendChild(groupDiv);
+			});
+		}else{
+			joinedContainer.innerHTML= "<p> No joined Groups. </p>"
+		}
+		
+		
+	}
     // Function to display groups
     function displayGroups(groups) {
-        groupsContainer.innerHTML = ""; // Clear existing content
+        createdContainer.innerHTML = ""; // Clear existing content
         if (groups.length > 0) {
             groups.forEach(group => {
                 const groupDiv = document.createElement("div");
-                groupDiv.className = "group";
+                groupDiv.className = "group-item";
 
                 // Add group image
                 const img = document.createElement("img");
@@ -64,16 +139,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 // Add click event to redirect to group chat
                 groupDiv.addEventListener("click", () => {
-                    window.location.href = `/ChatAPP/jsp/GroupChat.jsp?group_id=${group.group_id}`;
+                    //window.location.href = `/ChatAPP/jsp/GroupChat.jsp?group_id=${group.group_id}`;
+					let chatGroup = document.getElementById('group');
+					let messageContainer=document.getElementById("messageContainer");
+					let inputHidden = document.getElementById("message");
+					
+					
+					chatGroup.setAttribute("data-group-id", group.group_id)
+					messageContainer.setAttribute("data-group-id", group.group_id);
+					inputHidden.setAttribute("value",group_id);
+					
+
+					chatGroup.innerHTML = `
+
+					               <img src="/ChatAPP/groupImages/${groupDetail.groupImage}" alt="Group Image">
+								
+					               <strong>${groupDetail.groupName}</strong>
+					           `;
+					
+					
                 });
 
-                groupsContainer.appendChild(groupDiv);
+                createdContainer.appendChild(groupDiv);
             });
         } else {
-            groupsContainer.innerHTML = "<p>No groups available.</p>";
+            createdContainer.innerHTML = "<p>No groups available.</p>";
         }
     }
 
+	
+	
     // Function to display join requests
     function displayRequests(requests) {
         requestsContainer.innerHTML = ""; // Clear existing content
@@ -93,6 +188,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+	
+	
+	
+	
+	
     // Handle approve/reject actions for join requests
     requestsContainer.addEventListener("click", async (event) => {
         if (event.target.tagName === "BUTTON") {

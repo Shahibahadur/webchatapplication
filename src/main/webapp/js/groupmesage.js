@@ -297,9 +297,9 @@ async function fetchGroup() {
 
         if (response.ok) {
             const groupDetail = await response.json();
+			// <a href="http://localhost:8080/ChatAPP/GroupDisplayServlet" class="back-icon"><i class="fas fa-arrow-left"></i></a>			  
 
             groupElement.innerHTML = `
-              <a href="http://localhost:8080/ChatAPP/GroupDisplayServlet" class="back-icon"><i class="fas fa-arrow-left"></i></a>
 
                 <img src="/ChatAPP/groupImages/${groupDetail.groupImage}" alt="Group Image">
 				
@@ -390,7 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchGroup();
 	fetchMessages();
 	
-   messageInterval = setInterval(fetchMessages, 700);
+  // messageInterval = setInterval(fetchMessages, 700);
 
     CHATBOX.onmouseenter = () => {
         CHATBOX.classList.add("active");
