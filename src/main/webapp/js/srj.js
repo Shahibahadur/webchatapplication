@@ -96,18 +96,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 					
 					let chatGroup = document.getElementById('group');
 					let messageContainer=document.getElementById("messageContainer");
-					let inputHidden = document.getElementById("message");
+					let inputHidden = document.getElementById("groupId");
 					
 					
 					chatGroup.setAttribute("data-group-id", group.group_id)
 					messageContainer.setAttribute("data-group-id", group.group_id);
-					inputHidden.setAttribute("value",group_id);
+					inputHidden.setAttribute("value",group.group_id);
+
+
 					
 					chatGroup.innerHTML = `
 
-					               <img src="/ChatAPP/groupImages/${groupDetail.groupImage}" alt="Group Image">
+					               <img src="/ChatAPP/groupImages/${group.image}" alt="Group Image">
 								
-					               <strong>${groupDetail.groupName}</strong>
+					               <strong>${group.group_name}</strong>
 					           `;
 				});
 				joinedContainer.appendChild(groupDiv);
@@ -142,19 +144,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                     //window.location.href = `/ChatAPP/jsp/GroupChat.jsp?group_id=${group.group_id}`;
 					let chatGroup = document.getElementById('group');
 					let messageContainer=document.getElementById("messageContainer");
-					let inputHidden = document.getElementById("message");
+					let inputHidden = document.getElementById("groupId");
 					
 					
 					chatGroup.setAttribute("data-group-id", group.group_id)
 					messageContainer.setAttribute("data-group-id", group.group_id);
-					inputHidden.setAttribute("value",group_id);
-					
-
+					inputHidden.setAttribute("value",group.group_id);
 					chatGroup.innerHTML = `
 
-					               <img src="/ChatAPP/groupImages/${groupDetail.groupImage}" alt="Group Image">
+					               <img src="/ChatAPP/groupImages/${group.image}" alt="Group Image">
 								
-					               <strong>${groupDetail.groupName}</strong>
+					               <strong>${group.group_name}</strong>
 					           `;
 					
 					
