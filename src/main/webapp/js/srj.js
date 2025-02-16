@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 					
 					chatGroup.innerHTML = `
 
-					               <img src="/ChatAPP/groupImages/${group.image}" alt="Group Image">
+					               <img src="/ChatAPP/groupImages/${group.group_image}" alt="Group Image">
 								
 					               <strong>${group.group_name}</strong>
 					           `;
@@ -228,4 +228,22 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         }
     });
+	
+	
+	const groupItems = document.querySelectorAll('.group-item');
+
+	if (groupItems.length > 0) {  // Corrected variable name
+	    groupItems[0].classList.add('active');
+	}
+
+	groupItems.forEach(item => {
+	    item.addEventListener('click', function() {
+	        // Remove active class from all items
+	        groupItems.forEach(i => i.classList.remove('active'));
+	        // Add active class to clicked item
+	        this.classList.add('active');
+	    });
+	});
+
+	
 });

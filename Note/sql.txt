@@ -42,3 +42,16 @@ REFERENCED_TABLE_NAME = 'groups' AND REFERENCED_COLUMN_NAME = 'group_id'AND TABL
 | status      | enum('active','inactive')   | utf8mb4_general_ci | YES  |     | inactive          |                   | select,insert,update,references |         |
 | role        | enum('super admin','admin') | utf8mb4_general_ci | YES  |     | admin             |                   | select,insert,update,references |         |
 | as_admin_at | timestamp                   | NULL               | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED | select,insert,update,references |
+
++----------------+---------------------------------+-------------------------------------------------+
+| COLUMN_NAME    | PRIVILEGES                      | COLUMN_TYPE                                     |
++----------------+---------------------------------+-------------------------------------------------+
+| request_id     | select,insert,update,references | int                                             |
+| group_id       | select,insert,update,references | int                                             |
+| user_id        | select,insert,update,references | varchar(255)                                    |
+| request_status | select,insert,update,references | enum('pending','approved','rejected','invited') |
+| requested_at   | select,insert,update,references | timestamp                                       |
++----------------+---------------------------------+-------------------------------------------------+
+
+ 
+

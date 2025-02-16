@@ -144,21 +144,6 @@
     	</section>
     </div>
     </div>
-
-    <script>
-        const groupItems = document.querySelectorAll('.group-item');
-	if(groupsItem.length>0){
-	groupItems[0].classList.add('active');
-	}
-        groupItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // Remove active class from all items
-                document.querySelectorAll('.group-item').forEach(i => i.classList.remove('active'));
-                // Add active class to clicked item
-                this.classList.add('active');
-            });
-        });
-	</script>
         <script src="http://localhost:8080/ChatAPP/js/srj.js"></script> 
         <script src="http://localhost:8080/ChatAPP/js/groupmesage.js"></script>
          

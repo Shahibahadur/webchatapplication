@@ -172,4 +172,24 @@
     <servlet-name>ShowLogInAdmin</servlet-name>
     <url-pattern>/ShowLogInAdmin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GroupInviteReceived</display-name>
+    <servlet-name>GroupInviteReceived</servlet-name>
+    <servlet-class>group.GroupInviteReceived</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GroupInviteReceived</servlet-name>
+    <url-pattern>/GroupInviteReceived</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ManageGroupInviteServlet</display-name>
+    <servlet-name>ManageGroupInviteServlet</servlet-name>
+    <servlet-class>group.ManageGroupInviteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManageGroupInviteServlet</servlet-name>
+    <url-pattern>/ManageGroupInviteServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

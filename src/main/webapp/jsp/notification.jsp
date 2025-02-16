@@ -22,6 +22,14 @@
 		        	<!-- display friend request -->
 		        </div>
 	        </div>
+	        
+	        <div>
+	        	<p>Group Invite </p>
+	        	<div id = "gInvite">
+<!-- display group invite -->	
+	        	</div>
+	        
+	        </div>
         
         </div>
         

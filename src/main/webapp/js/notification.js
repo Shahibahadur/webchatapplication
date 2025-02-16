@@ -1,7 +1,7 @@
 $(document).ready(function () {
     const gjrContainer = $('#gjrNotification'); // Group Join Requests
     const frContainer = $('#frNotification');  // Friend Requests
-
+	const inviteContainer = $("#gInvite");
     function clearContainer(container, message) {
         container.html(`<p>${message}</p>`);
     }
@@ -21,6 +21,15 @@ $(document).ready(function () {
             dataType: "json",
         });
     }
+	
+	
+	function fetchInvite(){
+		return $.ajax({
+			url : "/ChatAPP/group-invites-received",
+			method: "GET",
+			dataType: "json",
+		});
+	}
 
     function displayRequests(requests, container) {
         if (requests.length > 0) {
@@ -59,6 +68,37 @@ $(document).ready(function () {
             clearContainer(frContainer, "No friend requests at the moment.");
         }
     }
+	
+	
+	
+	
+	
+	function displayInvite(invites) {
+	    console.log("Processing invites:", invites);
+
+	    if (invites.length > 0) {
+	        inviteContainer.empty();
+
+	        invites.forEach(invite => {
+	            console.log("Processing invite:", invite); // Log each invite object
+	            const inDiv = $(`
+	                <div class="group-invite">
+	                    <img src="/ChatAPP/uploads/${invite.image ? invite.image : 'default-profile.png'}"
+	                         alt="Profile Picture" class="profile-picture">
+	                    <p>${invite.user_fname} ${invite.user_lname} invited you to join ${invite.group_name}</p>
+	                    <button class="action-button" data-request-id="${invite.request_id}" data-action="approve">Approve</button>
+	                    <button class="action-button" data-request-id="${invite.request_id}" data-action="reject">Reject</button>
+	                </div>
+	            `);
+	            inviteContainer.append(inDiv);
+	        });
+	    } else {
+	        console.warn("No invites available");
+	        clearContainer(inviteContainer, "No Group Invites at the moment.");
+	    }
+	}
+
+
 
     async function handleAction(url, button) {
         const requestId = button.data('request-id');
@@ -76,6 +116,7 @@ $(document).ready(function () {
                 alert(`Request ${action}ed successfully!`);
                 refreshFriendRequest();
                 refreshRequests();
+				refreshInvite();
             } else {
                 alert(response.message || "Failed to manage the request. Try again.");
             }
@@ -98,6 +139,20 @@ $(document).ready(function () {
             displayFriendRequest(data);
         });
     }
+	
+	function refreshInvite() {
+	    fetchInvite().done(data => {
+	        console.log("Group Invite API Response:", data); // Debugging
+	        if (!Array.isArray(data)) {
+	            console.error("Unexpected response format:", data);
+	            return;
+	        }
+	        displayInvite(data);
+	    }).fail(error => {
+	        console.error("Failed to fetch invites:", error);
+	    });
+	}
+
 
     gjrContainer.on('click', '.action-button', function (event) {
         handleAction("/ChatAPP/ManageGroupRequestsServlet", $(event.target));
@@ -106,7 +161,12 @@ $(document).ready(function () {
     frContainer.on('click', '.action-button', function (event) {
         handleAction("/ChatAPP/ProcessRequestServlet", $(event.target));
     });
-
+	
+	inviteContainer.on('click','.action-button', function(event){
+		handleAction("/ChatAPP/ManageGroupInviteServlet", $(event.target));
+	})
+	
+	refreshInvite();
     refreshFriendRequest();
     refreshRequests();
 });
